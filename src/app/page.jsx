@@ -4,16 +4,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { IoStar } from "react-icons/io5";
 import { Urbanist } from "next/font/google";
+import { FcGoogle } from "react-icons/fc";
 
 const authFont = Urbanist({
   subsets: ["latin"],
-  
-})
+});
 
-export default function AuthLanding() {
+function Register() {
+  
   return (
     <div
-      className={`bg-zinc-50 font-sans min-h-screen px-10 md:px-50 py-10 ${authFont.className}`}
+      className={`bg-zinc-50 font-sans min-h-screen px-10 md:px-50 py-10 text-black ${authFont.className}`}
       style={{
         backgroundImage: `url(${assets.register_bg.src})`,
         backgroundSize: "cover",
@@ -71,6 +72,19 @@ export default function AuthLanding() {
             </p>
 
             <form className="mt-5 space-y-4">
+              {/* Name */}
+              <div>
+                 <label className="text-sm text-zinc-700 block mb-1">
+                  Name
+                </label>
+
+                <input
+                  type="text"
+                  placeholder="Enter your name"
+                  className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-1 focus:ring-zinc-800"
+                />
+              </div>
+
               {/* Email */}
               <div>
                 <label className="text-sm text-zinc-700 block mb-1">
@@ -79,7 +93,7 @@ export default function AuthLanding() {
                 <input
                   type="email"
                   placeholder="Enter your email address"
-                  className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-zinc-800"
+                  className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-1 focus:ring-zinc-800"
                 />
               </div>
 
@@ -91,19 +105,7 @@ export default function AuthLanding() {
                 <input
                   type="password"
                   placeholder="Password here"
-                  className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-zinc-800"
-                />
-              </div>
-
-              {/* Confirm Password */}
-              <div>
-                <label className="text-sm text-zinc-700 block mb-1">
-                  Confirm password
-                </label>
-                <input
-                  type="password"
-                  placeholder="Confirm password"
-                  className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-2 focus:ring-zinc-800"
+                  className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-1 focus:ring-zinc-800"
                 />
               </div>
 
@@ -112,14 +114,20 @@ export default function AuthLanding() {
                 type="submit"
                 className="w-full mt-2 py-2 rounded-md text-white font-medium
                        bg-gradient-to-b from-zinc-700 to-zinc-900
-                       hover:from-zinc-800 hover:to-black transition"
+                       hover:from-zinc-800 hover:to-black transition cursor-pointer"
               >
                 Continue →
               </button>
             </form>
 
+
+            <div className="social-section mt-3 flex flex-col justify-center items-center">
+              <FcGoogle size={30} className="cursor-pointer" />
+              <p className="pt-1 text-[0.8rem] text-gray-800 font-semibold">Continue With Social</p>
+            </div>
+
             {/* Footer */}
-            <p className="text-sm text-center text-zinc-600 mt-6">
+            <p className="text-sm text-center text-zinc-600">
               Already have an account?
               <Link href="/login" className="font-semibold text-zinc-900 cursor-pointer ps-1">
                 Sign in
@@ -130,4 +138,11 @@ export default function AuthLanding() {
       </div>
     </div>
   );
+}
+
+export default function PageWrapper() {
+  return(
+
+    <Register></Register>
+  )
 }
