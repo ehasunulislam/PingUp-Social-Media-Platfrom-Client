@@ -67,7 +67,7 @@ export default function login() {
               Create account
             </h2>
             <p className="text-sm text-center text-zinc-500 mt-1">
-              Please fill in the details to register
+              Please fill in the details to login
             </p>
 
             <form className="mt-5 space-y-4">
@@ -106,9 +106,13 @@ export default function login() {
               </button>
             </form>
 
-            <div className="social-section mt-3 flex flex-col justify-center items-center">
-              <FcGoogle size={30} className="cursor-pointer" />
-              <p className="pt-1 text-[0.8rem] text-gray-800 font-semibold">Continue With Social</p>
+           <div className="relative my-2 text-center">
+              <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-zinc-100"></div></div>
+              <span className="relative px-3 text-[10px] font-bold uppercase text-zinc-400 bg-white">Or join with</span>
+            </div>
+
+            <div className="social-section flex flex-col justify-center items-center py-2">
+              <FcGoogle size={30} className="cursor-pointer rounded-full border border-gray-400 p-1" />
             </div>
             
 
