@@ -1,3 +1,5 @@
+"use client"
+
 import Logo from "@/components/Logo/Logo";
 import Image from "next/image";
 import Link from "next/link";
@@ -5,12 +7,86 @@ import { IoStar } from "react-icons/io5";
 import { Urbanist } from "next/font/google";
 import assets from "@/components/Assets/assets";
 import { FcGoogle } from "react-icons/fc";
+import useAuthInfo from "@/Hooks/useAuthInfo";
+import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
+import { useRouter, useSearchParams } from "next/navigation";
+import useAxios from "@/Hooks/useAxios";
+import { HiOutlineMail } from "react-icons/hi";
+import { HiOutlineLockClosed } from "react-icons/hi2";
 
 const authFont = Urbanist({
   subsets: ["latin"],
 });
 
-export default function login() {
+export default function Login() {
+  const {register, handleSubmit, watch, reset,formState: {errors}} = useForm();
+  const {loginUserFunctionality, signInWithGooglePopUpFunction} = useAuthInfo();
+  const axiosSecure = useAxios();
+  
+  // redirect functionality 
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const redirect = searchParams.get("redirect") || "/home";
+
+  /* handle login functionality start */
+  const handleLogin = async(data) => {
+    try{
+      await loginUserFunctionality(data.email, data.password)
+      Swal.fire({
+        title: "Login Successful 🎉",
+        text: `Welcome back ${data.email}!`,
+        icon: "success",
+      });
+      reset();
+      router.push(redirect);
+    }
+    catch(err) {
+      Swal.fire({
+        icon: "error",
+        title: "Something went wrong!",
+        text: err.message,
+      });
+    }
+  }
+  /* handle login functionality end */
+
+
+  /* handle GooglePopup functionality start */
+  const handleGooglePopUp = async () => {
+    try{
+      const result = await signInWithGooglePopUpFunction();
+      const signInUser = result.user;
+
+      const userData = {
+        name: signInUser.displayName, 
+        email: signInUser.email,
+        img: signInUser.photoURL,
+        role: "user",
+        status: "approved"
+      };
+
+      const res = await axiosSecure.post("/user", userData)
+      if(res.data.insertedId || res.data.message === "User already exists"){
+        Swal.fire({
+          icon: "success",
+          title: "You logged in successfully",
+          showConfirmButton: false,
+          timer: 2500
+        });
+        router.push(redirect);
+      };
+    }
+    catch(err) {
+      Swal.fire({
+        icon: "error",
+        title: "Something went wrong!",
+        text: err.message,
+      });
+    }
+  }
+  /* handle GooglePopup functionality end */
+
   return (
     <div
       className={`bg-zinc-50 font-sans min-h-screen px-10 md:px-50 py-10 text-black ${authFont.className}`}
@@ -70,30 +146,33 @@ export default function login() {
               Please fill in the details to login
             </p>
 
-            <form className="mt-5 space-y-4">
+            <form className="mt-5 space-y-4" onSubmit={handleSubmit(handleLogin)}>
               {/* Email */}
-              <div>
-                <label className="text-sm text-zinc-700 block mb-1">
-                  Email address
-                </label>
-                <input
-                  type="email"
-                  placeholder="Enter your email address"
-                  className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-1 focus:ring-zinc-800"
-                />
-              </div>
+              <div className="relative group">
+                  <HiOutlineMail className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-zinc-900 transition-colors" />
+                  <input
+                    type="email"
+                    placeholder="Email address"
+                    {...register("email", {
+                      required: "Email is required",
+                      pattern: { value: /^\S+@\S+$/i, message: "Invalid email" },
+                    })}
+                    className={`w-full pl-10 pr-4 py-3 bg-zinc-50/50 border rounded-xl text-sm transition-all focus:bg-white focus:ring-4 focus:ring-zinc-100 outline-none
+                      ${errors.email ? "border-red-300" : "border-zinc-200 focus:border-zinc-900"}`}
+                  />
+                </div>
 
               {/* Password */}
-              <div>
-                <label className="text-sm text-zinc-700 block mb-1">
-                  Password
-                </label>
-                <input
-                  type="password"
-                  placeholder="Password here"
-                  className="w-full px-4 py-2 border border-zinc-300 rounded-md focus:outline-none focus:ring-1 focus:ring-zinc-800"
-                />
-              </div>
+              <div className="relative group">
+                  <HiOutlineLockClosed className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-zinc-900 transition-colors" />
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    {...register("password", { required: "Password is required" })}
+                    className={`w-full pl-10 pr-4 py-3 bg-zinc-50/50 border rounded-xl text-sm transition-all focus:bg-white focus:ring-4 focus:ring-zinc-100 outline-none
+                      ${errors.password ? "border-red-300" : "border-zinc-200 focus:border-zinc-900"}`}
+                  />
+                </div>
 
               {/* Button */}
               <button
@@ -106,7 +185,7 @@ export default function login() {
               </button>
 
               <div>
-                <p className="link text-[0.8rem] text-end">Forgot Password</p>
+                <p className="link text-[0.8rem] text-end">Forget Password</p>
               </div>
             </form>
 
@@ -116,7 +195,7 @@ export default function login() {
             </div>
 
             <div className="social-section flex flex-col justify-center items-center py-2">
-              <FcGoogle size={30} className="cursor-pointer rounded-full border border-gray-400 p-1" />
+              <FcGoogle size={30} className="cursor-pointer rounded-full border border-gray-400 p-1" onClick={handleGooglePopUp} />
             </div>
             
 

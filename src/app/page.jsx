@@ -100,7 +100,6 @@ export default function Register() {
   };
   /* handle Register functionality end */ 
 
-
   /* handle GooglePopup functionality start */
   const handleGooglePopUp = async () => {
     try{

@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import { AuthContext } from './AuthContext'
-import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth';
+import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { auth } from '@/firebase/firebase.config';
 
 const AuthProvider = ({children}) => {
@@ -24,6 +24,14 @@ const AuthProvider = ({children}) => {
     return signInWithPopup(auth, googleProvider);
   }
   /* google popup functionality end */
+
+  
+  /* loagin User functionality start */
+  const loginUserFunctionality = (email, password) => {
+    setLoading(true);
+    return signInWithEmailAndPassword(auth, email, password);
+  }
+  /* loagin User functionality end */
 
 
   /* update user functionality start */
@@ -58,6 +66,7 @@ const AuthProvider = ({children}) => {
     createUser,
     updateUserProfileFunction,
     signInWithGooglePopUpFunction,
+    loginUserFunctionality,
   }
 
   return(
