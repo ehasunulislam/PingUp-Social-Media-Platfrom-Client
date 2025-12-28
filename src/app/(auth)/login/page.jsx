@@ -104,6 +104,10 @@ export default function login() {
               >
                 Continue →
               </button>
+
+              <div>
+                <p className="link text-[0.8rem] text-end">Forgot Password</p>
+              </div>
             </form>
 
            <div className="relative my-2 text-center">

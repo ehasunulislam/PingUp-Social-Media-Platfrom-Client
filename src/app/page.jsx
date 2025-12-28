@@ -5,22 +5,30 @@ import Image from "next/image";
 import Link from "next/link";
 import { IoStar } from "react-icons/io5";
 import { Urbanist } from "next/font/google";
-import { FcGoogle } from "react-icons/fc";
+import { FcGoogle, FcMultipleCameras } from "react-icons/fc";
 import { useForm } from "react-hook-form";
-import { HiOutlineCloudArrowUp, HiOutlineUser, HiOutlineUserCircle } from "react-icons/hi2";
+import { HiOutlineUserCircle } from "react-icons/hi2";
 import { HiOutlineMail } from "react-icons/hi";
 import { HiOutlineLockClosed } from "react-icons/hi2";
 import { useEffect, useState } from "react";
 import { PiCameraFill } from "react-icons/pi";
+import useAuthInfo from "@/Hooks/useAuthInfo";
+import Swal from "sweetalert2";
+import axios from "axios";
+import useAxios from "@/Hooks/useAxios";
+import { useRouter, useSearchParams } from "next/navigation";
 
 
 const authFont = Urbanist({
   subsets: ["latin"],
 });
 
-function Register() {
-  const {register, handleSubmit, watch ,formState: {errors}} = useForm();
+export default function Register() {
+  const {register, handleSubmit, watch, reset,formState: {errors}} = useForm();
   const [preview, setPreview] = useState(null);
+  const {createUser, updateUserProfileFunction, signInWithGooglePopUpFunction} = useAuthInfo();
+  const axiosSecure = useAxios();
+
 
   /* preview the image functionality start */
   const imageFile = watch("image");
@@ -36,11 +44,97 @@ function Register() {
   }, [imageFile, setPreview])
   /* preview the image functionality end */
 
+  // redirect
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const redirect = searchParams.get("redirect") || "/home"
+
   /* handle Register functionality start */
-  const handleRegister = (data) => {
-    console.log(data);
-  } 
+  const handleRegister = async (data) => {
+    try{
+      // upload photo in imageBB
+      const registerImg = data.image[0];
+      const formData = new FormData();
+      formData.append("image", registerImg);
+
+      const image_BB_API_Key = `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMAGE_BB_API_LINK}`;
+      const imageRes = await axios.post(image_BB_API_Key, formData);
+      const imageData = imageRes.data.data.url;
+
+      // create user with firebase auth
+      const registerFunction = await createUser(data.email, data.password);
+      const user = registerFunction.user;
+      console.log(user);
+
+      // update user profile
+      await updateUserProfileFunction(data.name, imageData)
+
+      // send user in database
+      const userData = {
+        name: data.name,
+        email: data.email, 
+        img: imageData,
+        role: "user",
+        status: "approved"
+      }
+
+      const res = await axiosSecure.post("/user", userData);
+      if(res.data.insertedId){
+        Swal.fire({
+          icon: "success",
+          title: "You registerd successfully",
+          showConfirmButton: false,
+          timer: 2500
+        });
+        reset();
+        router.push(redirect)
+      };
+    }
+    catch(err) {
+      Swal.fire({
+        icon: "error",
+        title: "Something went wrong!",
+        text: err.message,
+      });
+    }
+  };
   /* handle Register functionality end */ 
+
+
+  /* handle GooglePopup functionality start */
+  const handleGooglePopUp = async () => {
+    try{
+      const result = await signInWithGooglePopUpFunction();
+      const signInUser = result.user;
+
+      const userData = {
+        name: signInUser.displayName, 
+        email: signInUser.email,
+        img: signInUser.photoURL,
+        role: "user",
+        status: "approved"
+      };
+
+      const res = await axiosSecure.post("/user", userData)
+      if(res.data.insertedId){
+        Swal.fire({
+          icon: "success",
+          title: "You registerd successfully",
+          showConfirmButton: false,
+          timer: 2500
+        });
+        router.push(redirect);
+      };
+    }
+    catch(err) {
+      Swal.fire({
+        icon: "error",
+        title: "Something went wrong!",
+        text: err.message,
+      });
+    }
+  }
+  /* handle GooglePopup functionality end */
 
   
   return (
@@ -87,7 +181,7 @@ function Register() {
         </section>
 
         {/* Form Section */}
-        <section className="w-full max-w-[420px]">
+        <section className="w-full max-w-105">
           <div className="bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-white">
             <div className="text-center mb-8">
               <h2 className="text-2xl font-bold text-zinc-900 tracking-tight">Create account</h2>
@@ -95,19 +189,17 @@ function Register() {
             </div>
 
             <form onSubmit={handleSubmit(handleRegister)} className="space-y-5">
-              
               {/* Profile Image with Preview */}
               <div className="relative flex flex-col items-center group">
                 <label className="relative cursor-pointer group">
-                  <div className={`w-20 h-20 rounded-full border-2 border-dashed flex items-center justify-center overflow-hidden transition-all duration-300
+                  <div className={`w-18 h-18 rounded-full border-2 border-dashed flex items-center justify-center overflow-hidden transition-all duration-300
                     ${errors.image ? "border-red-400 bg-red-50" : "border-zinc-200 bg-zinc-50 hover:border-indigo-400 hover:bg-indigo-50"}`}>
                     
                     {preview ? (
                       <Image src={preview} alt="Profile" className="object-cover rounded-full" fill />
                     ) : (
                       <div className="text-center text-zinc-400 group-hover:text-indigo-500">
-                        <HiOutlineCloudArrowUp className="mx-auto text-2xl" />
-                        <span className="text-[10px] font-bold uppercase tracking-tighter">Avatar</span>
+                        <FcMultipleCameras className="mx-auto text-2xl" />
                       </div>
                     )}
                   </div>
@@ -172,7 +264,7 @@ function Register() {
               <button
                 type="submit"
                 className="w-full mt-2 py-2 rounded-md text-white font-medium
-                       bg-gradient-to-b from-zinc-700 to-zinc-900
+                       bg-linear-to-b from-zinc-700 to-zinc-900
                        hover:from-zinc-800 hover:to-black transition cursor-pointer"
               >
                 Continue →
@@ -185,7 +277,7 @@ function Register() {
             </div>
 
             <div className="social-section flex flex-col justify-center items-center py-2">
-              <FcGoogle size={30} className="cursor-pointer rounded-full border border-gray-400 p-1" />
+              <FcGoogle size={30} className="cursor-pointer rounded-full border border-gray-400 p-1" onClick={handleGooglePopUp} />
             </div>
 
             <p className="text-center text-zinc-500 text-sm">
@@ -199,8 +291,3 @@ function Register() {
   );
 }
 
-export default function PageWrapper() {
-  return(
-    <Register></Register>
-  )
-}
