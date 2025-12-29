@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import { AuthContext } from './AuthContext'
-import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
 import { auth } from '@/firebase/firebase.config';
 
 const AuthProvider = ({children}) => {
@@ -33,6 +33,21 @@ const AuthProvider = ({children}) => {
   }
   /* loagin User functionality end */
 
+  /* forgot password functionality start */
+  const forgetPassword = (email) => {
+    setLoading(true);
+    return sendPasswordResetEmail(auth, email);
+  }
+  /* forgot password functionality end */
+
+
+  /* signOut functionality start */
+  const logOutFunctionality = () => {
+    setLoading(true);
+    return signOut(auth)
+  }
+  /* signOut functionality end */
+
 
   /* update user functionality start */
   const updateUserProfileFunction = (name, photoURL) => {
@@ -40,7 +55,7 @@ const AuthProvider = ({children}) => {
         return;
     }
 
-    return (auth.currentUser, {
+    return updateProfile(auth.currentUser, {
         displayName: name,
         photoURL: photoURL
     })
@@ -67,6 +82,8 @@ const AuthProvider = ({children}) => {
     updateUserProfileFunction,
     signInWithGooglePopUpFunction,
     loginUserFunctionality,
+    forgetPassword,
+    logOutFunctionality,
   }
 
   return(

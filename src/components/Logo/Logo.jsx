@@ -5,7 +5,7 @@ import assets from '../Assets/assets'
 const Logo = () => {
   return (
     <div>
-      <Image src={assets.logo}  alt='logo'/>
+      <Image src={assets.logo} width={130} height={130}  alt='logo'/>
     </div>
   )
 }

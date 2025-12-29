@@ -21,7 +21,7 @@ const authFont = Urbanist({
 
 export default function Login() {
   const {register, handleSubmit, watch, reset,formState: {errors}} = useForm();
-  const {loginUserFunctionality, signInWithGooglePopUpFunction} = useAuthInfo();
+  const {loginUserFunctionality, signInWithGooglePopUpFunction, forgetPassword} = useAuthInfo();
   const axiosSecure = useAxios();
   
   // redirect functionality 
@@ -86,6 +86,38 @@ export default function Login() {
     }
   }
   /* handle GooglePopup functionality end */
+
+  /* handle forget password start */
+  const handleForgetPaword = async() => {
+    const { value: email } = await Swal.fire({
+      title: "Reset Password",
+      text: "Enter your email to receive reset link",
+      input: "email",
+      inputPlaceholder: "Enter your email address",
+      confirmButtonText: "Send Reset Link",
+      showCancelButton: true,
+    });
+
+    if (!email) return;
+
+    try {
+      await forgetPassword(email);
+      Swal.fire({
+        icon: "success",
+        title: "Email Sent!",
+        text: `Password reset link sent to ${email}`,
+        timer: 2500,
+        showConfirmButton: false
+      });
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        title: "Failed!",
+        text: err.message,
+      });
+    }
+  }
+  /* handle forget password end */
 
   return (
     <div
@@ -185,7 +217,7 @@ export default function Login() {
               </button>
 
               <div>
-                <p className="link text-[0.8rem] text-end">Forget Password</p>
+                <p className="link text-[0.8rem] text-end" onClick={handleForgetPaword}>Forget Password</p>
               </div>
             </form>
 
