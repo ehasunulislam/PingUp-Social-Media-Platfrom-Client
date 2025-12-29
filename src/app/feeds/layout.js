@@ -11,11 +11,12 @@ import { TfiUser } from "react-icons/tfi";
 import { BsPatchPlus } from "react-icons/bs";
 import { HiMiniArrowRightStartOnRectangle } from "react-icons/hi2";
 import ActiveLinks from "@/components/Active-Links/ActiveLinks";
-import assets from "@/components/Assets/assets";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export default function FeedLayout({ children }) {
 
   const { user, logOutFunctionality } = useAuthInfo();
+  const queryClient = new QueryClient();
 
   const handleLogOut = () => {
     logOutFunctionality()
@@ -87,7 +88,9 @@ export default function FeedLayout({ children }) {
 
       {/* MAIN CONTENT */}
       <div className="col-span-6">
-        {children}
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
       </div>
 
       {/* RIGHT SIDEBAR */}

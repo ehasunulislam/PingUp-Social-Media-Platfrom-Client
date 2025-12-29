@@ -1,7 +1,11 @@
+import MyDay from "@/components/Fedds-com/MyDay";
+
 export default function FeedPage() {
   return (
-    <div>
-      <p>Main Feed Content Here</p>
+    <div className="mt-4 px-4">
+      <div className="myDay-section">
+        <MyDay />
+      </div>
     </div>
   );
 }
