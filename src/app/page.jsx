@@ -47,7 +47,7 @@ export default function Register() {
   // redirect
   const searchParams = useSearchParams();
   const router = useRouter();
-  const redirect = searchParams.get("redirect") || "/home"
+  const redirect = searchParams.get("redirect") || "/feeds"
 
   /* handle Register functionality start */
   const handleRegister = async (data) => {

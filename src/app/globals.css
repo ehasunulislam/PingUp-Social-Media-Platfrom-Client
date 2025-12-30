@@ -6,3 +6,16 @@
 body {
   font-family: "Urbanist", sans-serif;
 }
+
+.progress-animation {
+  animation: progress 6s linear forwards;
+}
+
+@keyframes progress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}

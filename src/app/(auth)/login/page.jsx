@@ -27,7 +27,7 @@ export default function Login() {
   // redirect functionality 
   const searchParams = useSearchParams();
   const router = useRouter();
-  const redirect = searchParams.get("redirect") || "/home";
+  const redirect = searchParams.get("redirect") || "/feeds";
 
   /* handle login functionality start */
   const handleLogin = async(data) => {
