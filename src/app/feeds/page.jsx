@@ -1,6 +1,7 @@
 import MyDay from "@/components/Fedds-com/MyDay";
+import PrivateRoutes from "@/Routes/PrivateRoutes";
 
-export default function FeedPage() {
+function FeedPage() {
   return (
     <div className="mt-4 px-4">
       <div className="myDay-section">
@@ -8,4 +9,12 @@ export default function FeedPage() {
       </div>
     </div>
   );
+}
+
+export default function PageWrapper() {
+  return(
+    <PrivateRoutes>
+      <FeedPage></FeedPage>
+    </PrivateRoutes>
+  )
 }

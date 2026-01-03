@@ -14,6 +14,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import useAxios from "@/Hooks/useAxios";
 import { HiOutlineMail } from "react-icons/hi";
 import { HiOutlineLockClosed } from "react-icons/hi2";
+import { useEffect } from "react";
 
 const authFont = Urbanist({
   subsets: ["latin"],
@@ -21,13 +22,20 @@ const authFont = Urbanist({
 
 export default function Login() {
   const {register, handleSubmit, watch, reset,formState: {errors}} = useForm();
-  const {loginUserFunctionality, signInWithGooglePopUpFunction, forgetPassword} = useAuthInfo();
+  const {user, loading, loginUserFunctionality, signInWithGooglePopUpFunction, forgetPassword} = useAuthInfo();
   const axiosSecure = useAxios();
   
   // redirect functionality 
   const searchParams = useSearchParams();
   const router = useRouter();
   const redirect = searchParams.get("redirect") || "/feeds";
+
+  // useEffect for if user already login
+  useEffect(() => {
+    if(!loading && user) {
+      router.push("/feeds")
+    }
+  },[loading, user, router])
 
   /* handle login functionality start */
   const handleLogin = async(data) => {
@@ -50,7 +58,6 @@ export default function Login() {
     }
   }
   /* handle login functionality end */
-
 
   /* handle GooglePopup functionality start */
   const handleGooglePopUp = async () => {

@@ -7,6 +7,9 @@ import React, { useRef, useState, useEffect } from "react";
 import { FaPlus } from "react-icons/fa6";
 import DayCardDesign from "../Design/Card-Design/DayCardDesign";
 import { CiLocationArrow1 } from "react-icons/ci";
+import { GiCrossMark } from "react-icons/gi";
+import { TbPhotoFilled } from "react-icons/tb";
+
 
 // Swiper imports
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -14,11 +17,14 @@ import { FreeMode, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
+import { IoText } from "react-icons/io5";
 
 const MyDay = () => {
   const { user } = useAuthInfo();
   const prevRef = useRef(null);
   const nextRef = useRef(null);
+  const createStoryRef = useRef(null);
+  const storyImageUploadRef = useRef(null);
 
   const { data: actualStories = [] } = useQuery({
     queryKey: ["myDay"],
@@ -40,6 +46,7 @@ const MyDay = () => {
 
   // Modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCreateStoryModal, setIsCreateStoryModal] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // Auto-advance timer (6 seconds per story)
@@ -52,6 +59,31 @@ const MyDay = () => {
 
     return () => clearTimeout(timer);
   }, [isModalOpen, currentIndex, actualStories.length]);
+
+
+  // useEffect for createSory 
+  useEffect(() => {
+    const handleCreateStory = (e) => {
+      if(createStoryRef.current && !createStoryRef.current.contains(e.target)){
+        setIsCreateStoryModal(false);
+      }
+    }
+
+    const handleEscap = (e) => {
+      if(e.key === "Escape"){
+        return setIsCreateStoryModal(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleCreateStory);
+    document.addEventListener("keydown", handleEscap);
+
+    return() => {
+      document.removeEventListener("mousedown", handleCreateStory);
+      document.removeEventListener("keydown", handleEscap);
+    }
+  }, [])
+
 
   // Open modal at specific story
   const handleOpenModal = (index) => {
@@ -74,6 +106,12 @@ const MyDay = () => {
     setCurrentIndex((prev) => (prev + 1) % actualStories.length);
   };
 
+
+  // handleStoryUpload functionality 
+  const handleStoryUpload = () => {
+    storyImageUploadRef.current?.click();
+  }
+
   return (
     <div className="relative space-y-4">
       {/* Swiper Carousel */}
@@ -95,7 +133,7 @@ const MyDay = () => {
         {carouselStories.map((item, idx) => (
           <SwiperSlide key={item.id} style={{ width: "120px" }}>
             {item.type === "create" ? (
-              <div className="w-28 sm:w-32 h-44 sm:h-48 rounded-[15px] overflow-hidden shadow hover:scale-[1.02] duration-200 relative cursor-pointer bg-base-200">
+              <div className="create-story w-28 sm:w-32 h-44 sm:h-48 rounded-[15px] overflow-hidden shadow hover:scale-[1.02] duration-200 relative cursor-pointer bg-base-200" onClick={() => setIsCreateStoryModal(true)}>
                 {item.userImage ? (
                   <Image
                     src={item.userImage}
@@ -134,13 +172,13 @@ const MyDay = () => {
         <div className="hidden md:flex gap-3 mt-2 px-2">
           <button
             ref={prevRef}
-            className="bg-gray-200 hover:bg-gray-300 p-3 rounded-full"
+            className="bg-gray-200 hover:bg-gray-300 p-3 rounded-full cursor-pointer"
           >
             <CiLocationArrow1 className="text-black -rotate-135" size={20} />
           </button>
           <button
             ref={nextRef}
-            className="bg-gray-200 hover:bg-gray-300 p-3 rounded-full"
+            className="bg-gray-200 hover:bg-gray-300 p-3 rounded-full cursor-pointer"
           >
             <CiLocationArrow1 className="text-black rotate-45" size={20} />
           </button>
@@ -225,6 +263,46 @@ const MyDay = () => {
           </div>
         </div>
       )}
+
+
+      {/* CREATE STORY MODAL START */}
+      {
+        isCreateStoryModal && (
+          <dialog open ref={createStoryRef} className="modal modal-bottom sm:modal-middle">
+            <div className="modal-box bg-transparent shadow-none">
+              <div className="modal-action">
+                <form method="dialog">
+                  {/* if there is a button in form, it will close the modal */}
+                  <GiCrossMark className="text-black cursor-pointer" onClick={() => setIsCreateStoryModal(false)} />
+                </form>
+              </div>
+
+              <section className="flex justify-center gap-5">
+                <>
+                  <input type="file" ref={storyImageUploadRef} className="hidden" accept="image/*" />
+
+                  <div  className="h-53 w-42 bg-linear-to-br from-[#6C2CF8] via-[#6E7BFF] to-[#7AD7FF] flex justify-center items-center flex-col rounded-2xl space-y-1 cursor-pointer file" onClick={handleStoryUpload}>
+                    <div className="bg-black rounded-full w-10 h-10 flex justify-center items-center">
+                      <TbPhotoFilled className="text-white"/>
+                    </div> 
+                    <p className="text-[0.9rem]">Story With Photo</p>
+                  </div>
+                </>
+
+
+                <div className="h-53 w-42 bg-linear-to-b from-purple-500 via-pink-500 to-pink-400 flex justify-center items-center flex-col rounded-2xl space-y-1 cursor-pointer">
+                  <div className="bg-black rounded-full w-10 h-10 flex justify-center items-center">
+                    <IoText className="text-white"/>
+                  </div> 
+                  <p className="text-[0.9rem]">Story With Text</p>
+                </div>
+              </section>
+            </div>
+          </dialog>
+        )
+      }
+
+
 
       {/* Global keyframes for progress animation */}
       <style jsx global>{`

@@ -64,12 +64,14 @@ export default function FeedLayout({ children }) {
               <Link href="/">
                 <div className="flex justify-between px-4 items-center">
                   <div className="flex gap-3 items-center">
-                    <div className="relative w-10 h-10 rounded-full overflow-hidden">
-                      <Image src={user.photoURL} alt="User" fill />
-                    </div>
-                    <div className="text-black">
-                      <p className="text-sm">{user.displayName}</p>
-                      <p className="text-xs text-gray-500">{user.email}</p>
+                    <div>
+                       <div className="relative w-10 h-10 rounded-full overflow-hidden">
+                          <Image src={user.photoURL} alt="User" fill />
+                        </div>
+                        <div className="text-black">
+                          <p className="text-sm">{user.displayName}</p>
+                          <p className="text-[0.7rem] text-gray-500">{user.email}</p>
+                        </div>
                     </div>
                   </div>
 

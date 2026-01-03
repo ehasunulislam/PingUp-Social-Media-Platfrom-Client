@@ -26,9 +26,20 @@ const authFont = Urbanist({
 export default function Register() {
   const {register, handleSubmit, watch, reset,formState: {errors}} = useForm();
   const [preview, setPreview] = useState(null);
-  const {createUser, updateUserProfileFunction, signInWithGooglePopUpFunction} = useAuthInfo();
+  const {user, loading, createUser, updateUserProfileFunction, signInWithGooglePopUpFunction} = useAuthInfo();
   const axiosSecure = useAxios();
 
+  // redirect
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const redirect = searchParams.get("redirect") || "/feeds"
+
+  // useEffct for if use already registerd
+  useEffect(() => {
+    if(!loading && user){
+      router.push("/feeds")
+    }
+  }, [loading, user, router])
 
   /* preview the image functionality start */
   const imageFile = watch("image");
@@ -43,11 +54,6 @@ export default function Register() {
     }
   }, [imageFile, setPreview])
   /* preview the image functionality end */
-
-  // redirect
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const redirect = searchParams.get("redirect") || "/feeds"
 
   /* handle Register functionality start */
   const handleRegister = async (data) => {
