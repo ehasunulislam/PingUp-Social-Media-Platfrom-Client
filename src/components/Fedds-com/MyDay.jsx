@@ -18,6 +18,7 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import { IoText } from "react-icons/io5";
+import { useRouter } from "next/navigation";
 
 const MyDay = () => {
   const { user } = useAuthInfo();
@@ -25,6 +26,8 @@ const MyDay = () => {
   const nextRef = useRef(null);
   const createStoryRef = useRef(null);
   const storyImageUploadRef = useRef(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const router = useRouter();
 
   const { data: actualStories = [] } = useQuery({
     queryKey: ["myDay"],
@@ -110,6 +113,15 @@ const MyDay = () => {
   // handleStoryUpload functionality 
   const handleStoryUpload = () => {
     storyImageUploadRef.current?.click();
+  }
+  const handleChange = (e) => {
+    const file = e.target.files?.[0];
+    if(file) {
+      setSelectedFile(file);
+
+      const previewURL = URL.createObjectURL(file);
+      router.push(`/storyImagePreveiw?image=${encodeURIComponent(previewURL)}`)
+    }
   }
 
   return (
@@ -279,7 +291,7 @@ const MyDay = () => {
 
               <section className="flex justify-center gap-5">
                 <>
-                  <input type="file" ref={storyImageUploadRef} className="hidden" accept="image/*" />
+                  <input type="file" ref={storyImageUploadRef} className="hidden" accept="image/*" onChange={handleChange} />
 
                   <div  className="h-53 w-42 bg-linear-to-br from-[#6C2CF8] via-[#6E7BFF] to-[#7AD7FF] flex justify-center items-center flex-col rounded-2xl space-y-1 cursor-pointer file" onClick={handleStoryUpload}>
                     <div className="bg-black rounded-full w-10 h-10 flex justify-center items-center">

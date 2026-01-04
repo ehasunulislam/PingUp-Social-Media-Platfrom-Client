@@ -4,7 +4,6 @@ import Logo from "@/components/Logo/Logo";
 import useAuthInfo from "@/Hooks/useAuthInfo";
 import Link from "next/link";
 import Image from "next/image";
-import Swal from "sweetalert2";
 import { BiHomeAlt } from "react-icons/bi";
 import { LuUsersRound } from "react-icons/lu";
 import { TfiUser } from "react-icons/tfi";
@@ -13,22 +12,12 @@ import { HiMiniArrowRightStartOnRectangle } from "react-icons/hi2";
 import ActiveLinks from "@/components/Active-Links/ActiveLinks";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-export default function FeedLayout({ children }) {
-
-  const { user, logOutFunctionality } = useAuthInfo();
+export default function StoryImageUploadLayout({ children }) {
+  const { user } = useAuthInfo();
   const queryClient = new QueryClient();
-
-  const handleLogOut = () => {
-    logOutFunctionality()
-      .then(() => Swal.fire({ title: "Logged out", icon: "success" }))
-      .catch(err =>
-        Swal.fire({ icon: "error", title: err.message })
-      );
-  };
 
   return (
     <div className="grid grid-cols-12 min-h-screen bg-[#F8FAFC]">
-
       {/* LEFT SIDEBAR */}
       <div className="col-span-2 bg-white border border-r-gray-200">
         <div className="min-h-screen relative">
@@ -94,36 +83,6 @@ export default function FeedLayout({ children }) {
           {children}
         </QueryClientProvider>
       </div>
-
-      {/* RIGHT SIDEBAR */}
-      <div className="col-span-4 mt-3">
-        {/* news feed */}
-        <div className="card bg-white w-96 shadow-sm text-black px-5 pt-5">
-            <h3 className="font-bold">Sponsored</h3>
-            <figure className="pt-3">
-                <Image
-                src={"/assets/news_feed.png"}
-                alt="Shoes"
-                height={300}
-                width={350}
-                className="rounded-xl" />
-            </figure>
-            <div className="card-body">
-                <h2 className="card-title">Email marketing</h2>
-                <p className="text-gray-400">Supercharge your marketing with a powerful, easy-to-use platform built for results.</p>
-            </div>
-        </div>
-
-        {/* Recent message */}
-        <div className="text-black bg-white w-96 shadow mt-5 px-5 py-4 rounded"> 
-            <h3 className="font-bold">Recent Messages</h3>
-        </div>
-
-        <button className="btn btn-accent" onClick={handleLogOut}>
-          Logout
-        </button>
-      </div>
-
     </div>
   );
 }
