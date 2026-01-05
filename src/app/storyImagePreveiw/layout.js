@@ -29,7 +29,7 @@ export default function StoryImageUploadLayout({ children }) {
           </section>
 
           <div className="ps-6 mt-4 text-black">
-             <ActiveLinks href="/feeds">
+             {/* <ActiveLinks href="/feeds">
                 <BiHomeAlt /> <p>Feed</p>
             </ActiveLinks>
 
@@ -39,27 +39,24 @@ export default function StoryImageUploadLayout({ children }) {
 
             <ActiveLinks href="/profile">
                 <TfiUser /> <p>Profile</p>
-            </ActiveLinks>
+            </ActiveLinks> */}
           </div>
 
-          <div className="ps-6">
-            <button className="btn flex gap-3 bg-linear-to-r from-[#615FFF] to-[#9810FA] text-white rounded-[10px] px-10 border-0">
-              <BsPatchPlus /> Create a post
-            </button>
-          </div>
 
-          <div className="absolute bottom-0 w-full border-t py-3">
-            {user ? (
-              <Link href="/">
+          <div className="w-full">
+            <h3 className="text-black px-4 text-2xl font-semibold">Your Story</h3>
+
+           <div className="pt-4">
+             {user ? (
+              <Link href="/profile"> 
                 <div className="flex justify-between px-4 items-center">
                   <div className="flex gap-3 items-center">
-                    <div>
+                    <div className="flex gap-3 items-center">
                        <div className="relative w-10 h-10 rounded-full overflow-hidden">
                           <Image src={user.photoURL} alt="User" fill />
                         </div>
                         <div className="text-black">
                           <p className="text-sm">{user.displayName}</p>
-                          <p className="text-[0.7rem] text-gray-500">{user.email}</p>
                         </div>
                     </div>
                   </div>
@@ -72,6 +69,7 @@ export default function StoryImageUploadLayout({ children }) {
             ) : (
               <p className="text-center">User Not Found</p>
             )}
+           </div>
           </div>
 
         </div>

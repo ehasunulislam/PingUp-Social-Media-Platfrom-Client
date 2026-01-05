@@ -46,25 +46,25 @@ function StoryImagePreview () {
             const imageLink = res.data.data.url; 
             // send to backend
             const newStoryData = {
-            email: user?.email,
-            dayPic: imageLink,
+                email: user?.email,
+                dayPic: imageLink,
             };
 
             await axiosSecure.post("/stories/upload", newStoryData);
 
             Swal.fire({
-            icon: "success",
-            title: "Story Posted Successfully!",
-            timer: 2000
+                icon: "success",
+                title: "Story Posted Successfully!",
+                timer: 2000
             });
 
             router.push("/feeds");
 
         } catch (error) {
             Swal.fire({
-            icon: "error",
-            title: "Upload Failed",
-            text: error.message
+                icon: "error",
+                title: "Upload Failed",
+                text: error.message
             });
         }
     };

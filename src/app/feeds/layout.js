@@ -61,7 +61,7 @@ export default function FeedLayout({ children }) {
 
           <div className="absolute bottom-0 w-full border-t py-3">
             {user ? (
-              <Link href="/">
+              <Link href="/profile">
                 <div className="flex justify-between px-4 items-center">
                   <div className="flex gap-3 items-center">
                     <div>
