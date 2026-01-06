@@ -4,12 +4,7 @@ import Logo from "@/components/Logo/Logo";
 import useAuthInfo from "@/Hooks/useAuthInfo";
 import Link from "next/link";
 import Image from "next/image";
-import { BiHomeAlt } from "react-icons/bi";
-import { LuUsersRound } from "react-icons/lu";
-import { TfiUser } from "react-icons/tfi";
-import { BsPatchPlus } from "react-icons/bs";
 import { HiMiniArrowRightStartOnRectangle } from "react-icons/hi2";
-import ActiveLinks from "@/components/Active-Links/ActiveLinks";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export default function StoryImageUploadLayout({ children }) {
@@ -27,20 +22,6 @@ export default function StoryImageUploadLayout({ children }) {
               <Logo />
             </Link>
           </section>
-
-          <div className="ps-6 mt-4 text-black">
-             {/* <ActiveLinks href="/feeds">
-                <BiHomeAlt /> <p>Feed</p>
-            </ActiveLinks>
-
-            <ActiveLinks href="/connections">
-                <LuUsersRound /> <p>Connections</p>
-            </ActiveLinks>
-
-            <ActiveLinks href="/profile">
-                <TfiUser /> <p>Profile</p>
-            </ActiveLinks> */}
-          </div>
 
 
           <div className="w-full">

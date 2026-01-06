@@ -9,7 +9,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { FaPlus } from "react-icons/fa6";
 import DayCardDesign from "../Design/Card-Design/DayCardDesign";
 import { CiLocationArrow1 } from "react-icons/ci";
-import { GiCrossMark } from "react-icons/gi";
+import { RxCrossCircled } from "react-icons/rx";
 import { TbPhotoFilled } from "react-icons/tb";
 import { IoText } from "react-icons/io5";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -18,6 +18,7 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const MyDay = () => {
   const { user } = useAuthInfo();
@@ -240,14 +241,14 @@ const MyDay = () => {
         <dialog open ref={createStoryRef} className="modal modal-bottom sm:modal-middle">
           <div className="modal-box bg-transparent shadow-none">
             <div className="modal-action">
-              <form method="dialog">
-                <GiCrossMark className="text-black cursor-pointer" onClick={() => setIsCreateStoryModal(false)} />
+              <form method="dialog" className="p-2 bg-black rounded-full">
+                <RxCrossCircled className="text-white cursor-pointer" onClick={() => setIsCreateStoryModal(false)} />
               </form>
             </div>
 
             <section className="flex justify-center gap-5">
-              <input type="file" ref={storyImageUploadRef} className="hidden" accept="image/*" onChange={handleChange} />
-
+              {/* story image upload */}
+              <input type="file" ref={storyImageUploadRef} className="hidden" accept="image/*" onChange={handleChange} />             
               <div
                 className="h-53 w-42 bg-linear-to-br from-[#6C2CF8] via-[#6E7BFF] to-[#7AD7FF] flex justify-center items-center flex-col rounded-2xl space-y-1 cursor-pointer"
                 onClick={handleStoryUpload}
@@ -258,12 +259,15 @@ const MyDay = () => {
                 <p className="text-[0.9rem]">Story With Photo</p>
               </div>
 
-              <div className="h-53 w-42 bg-linear-to-b from-purple-500 via-pink-500 to-pink-400 flex justify-center items-center flex-col rounded-2xl space-y-1 cursor-pointer">
-                <div className="bg-black rounded-full w-10 h-10 flex justify-center items-center">
-                  <IoText className="text-white" />
+              {/* story text upload */}
+              {/* <Link href="/storyTextPreview">
+                <div className="h-53 w-42 bg-linear-to-b from-purple-500 via-pink-500 to-pink-400 flex justify-center items-center flex-col rounded-2xl space-y-1 cursor-pointer">
+                  <div className="bg-black rounded-full w-10 h-10 flex justify-center items-center">
+                    <IoText className="text-white" />
+                  </div>
+                  <p className="text-[0.9rem]">Story With Text</p>
                 </div>
-                <p className="text-[0.9rem]">Story With Text</p>
-              </div>
+              </Link> */}
             </section>
           </div>
         </dialog>
