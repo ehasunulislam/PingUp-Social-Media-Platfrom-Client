@@ -19,6 +19,7 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import LoadingSkelatonOfMyDay from "./LoadingSkelatonOfMyDay";
 
 const MyDay = () => {
   const { user } = useAuthInfo();
@@ -35,7 +36,7 @@ const MyDay = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // Fetch stories using axiosSecure
-  const { data: actualStories = [] } = useQuery({
+  const { data: actualStories = [], isLoading } = useQuery({
     queryKey: ["myDay"],
     queryFn: async () => {
       const res = await axiosSecure.get("/all-stories");
@@ -109,6 +110,12 @@ const MyDay = () => {
       router.push(`/storyImagePreveiw?image=${encodeURIComponent(previewURL)}`);
     }
   };
+
+  if(isLoading) {
+    return(
+      <LoadingSkelatonOfMyDay />
+    )
+  }
 
   return (
     <div className="relative space-y-4">
