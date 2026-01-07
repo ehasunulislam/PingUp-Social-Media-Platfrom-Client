@@ -89,7 +89,7 @@ export default function FeedLayout({ children }) {
       </div>
 
       {/* MAIN CONTENT */}
-      <div className="col-span-6">
+      <div className="col-span-6 sticky top-0 h-screen overflow-y-auto">
         <QueryClientProvider client={queryClient}>
           {children}
         </QueryClientProvider>

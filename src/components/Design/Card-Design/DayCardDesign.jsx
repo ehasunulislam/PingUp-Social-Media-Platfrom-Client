@@ -1,5 +1,6 @@
 "use client";
 
+import moment from "moment/moment";
 import Image from "next/image";
 
 const DayCardDesign = ({ userImg, dayPic, createdAt }) => {
@@ -37,7 +38,7 @@ const DayCardDesign = ({ userImg, dayPic, createdAt }) => {
 
       {/* Time Text */}
       <p className="absolute bottom-2 w-full text-center text-white text-xs sm:text-sm font-semibold">
-        {createdAt}
+        {moment(createdAt).fromNow()}
       </p>
     </div>
   );

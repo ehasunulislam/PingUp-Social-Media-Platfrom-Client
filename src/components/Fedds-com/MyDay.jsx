@@ -93,6 +93,7 @@ const MyDay = () => {
     setCurrentIndex(0);
   };
 
+  /* previw and next button */
   const handlePrev = () => {
     setCurrentIndex((prev) => (prev - 1 + actualStories.length) % actualStories.length);
   };
@@ -141,7 +142,7 @@ const MyDay = () => {
               >
                 {item.userImage && (
                   <Image
-                    src={item.userImage || "/default-user.png"}
+                    src={item.userImage || "/assets/default-user.jpg"}
                     alt="Your story"
                     fill
                     className="object-cover"
@@ -172,10 +173,11 @@ const MyDay = () => {
 
       {/* Navigation buttons */}
       <div className="flex justify-end hidden md:flex gap-3 mt-2 px-2">
-        <button ref={prevRef} className="bg-gray-200 hover:bg-gray-300 p-3 rounded-full">
+        <button ref={prevRef} className="bg-gray-200 hover:bg-gray-300 p-3 rounded-full cursor-pointer">
           <CiLocationArrow1 className="text-black -rotate-135" size={20} />
         </button>
-        <button ref={nextRef} className="bg-gray-200 hover:bg-gray-300 p-3 rounded-full">
+
+        <button ref={nextRef} className="bg-gray-200 hover:bg-gray-300 p-3 rounded-full cursor-pointer">
           <CiLocationArrow1 className="text-black rotate-45" size={20} />
         </button>
       </div>
