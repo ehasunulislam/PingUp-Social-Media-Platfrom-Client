@@ -4,6 +4,7 @@ import useAuthInfo from "@/Hooks/useAuthInfo";
 import useAxios from "@/Hooks/useAxios";
 import PrivateRoutes from "@/Routes/PrivateRoutes";
 import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useRef, useState, useEffect } from "react";
 import { LuImageUp } from "react-icons/lu";
 import Swal from "sweetalert2";
@@ -15,6 +16,11 @@ function CreatePostPage() {
   const fileInputRef = useRef(null);
   const [selectedImages, setSelectedImages] = useState([]);
   const [text, setText] = useState("");
+
+  // redirect after post-create
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const redirect = searchParams.get("redirect") || "/feeds"
 
   const handleImageClick = () => {
     fileInputRef.current.click();
@@ -74,6 +80,9 @@ function CreatePostPage() {
       // reset the form
       setText("");
       setSelectedImages([]);
+
+      // ridrect
+      router.push(redirect)
 
     } catch (err) {
       Swal.fire({
