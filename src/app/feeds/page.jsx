@@ -1,4 +1,4 @@
-import FeedsImage from "@/components/Fedds-com/FeedsImage";
+import AllFeeds from "@/components/Fedds-com/AllFeeds";
 import MyDay from "@/components/Fedds-com/MyDay";
 import PrivateRoutes from "@/Routes/PrivateRoutes";
 
@@ -7,7 +7,7 @@ function FeedPage() {
     <div className="mt-4 px-4">
       <div className="myDay-section">
         <MyDay />
-        <FeedsImage />
+        <AllFeeds />
       </div>
     </div>
   );
