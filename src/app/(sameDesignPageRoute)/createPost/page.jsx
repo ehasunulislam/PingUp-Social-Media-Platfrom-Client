@@ -106,7 +106,7 @@ function CreatePostPage() {
 
             <section className="my-2">
               <textarea
-                className="w-full bg-transparent border-gray-400 border-t-0 border-l-0 border-r-0 border-b-2 outline-0"
+                className="w-full bg-transparent border-gray-200 border-t-0 border-l-0 border-r-0 border-b-2 outline-0"
                 placeholder="What's on your mind?"
                 value={text}
                 onChange={(e) => setText(e.target.value)}

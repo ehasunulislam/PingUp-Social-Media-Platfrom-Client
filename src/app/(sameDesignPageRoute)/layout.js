@@ -20,11 +20,11 @@ export default function SameDesignPageRouteLayout({ children }) {
   return (
     <div className="min-h-screen bg-[#F8FAFC] lg:grid lg:grid-cols-12">
       {/* ================= LEFT SIDEBAR (Desktop & Tablet) ================= */}
-      <aside className="hidden md:block lg:col-span-2 md:col-span-1 bg-white border-r">
+      <aside className="hidden md:block lg:col-span-2 md:col-span-1 bg-white border border-r-gray-200">
         <div className="min-h-screen flex flex-col justify-between">
           {/* Logo */}
           <div>
-            <div className="ps-6 py-3 border-b">
+            <div className="ps-6 py-3 border border-b-gray-200">
               <Link href="/home">
                 <Logo />
               </Link>
@@ -58,7 +58,7 @@ export default function SameDesignPageRouteLayout({ children }) {
 
           {/* User Info */}
           {user && (
-            <Link href="/profile" className="border-t py-4 px-4">
+            <Link href="/profile" className="border-t py-4 px-4 border border-t-gray-200">
               <div className="flex items-center justify-between">
                 <div className="flex gap-3 items-center">
                   <div className="relative w-10 h-10 rounded-full overflow-hidden">
