@@ -1,16 +1,20 @@
 "use client";
 
 import useAuthInfo from "@/Hooks/useAuthInfo";
+import useAxios from "@/Hooks/useAxios";
 import PrivateRoutes from "@/Routes/PrivateRoutes";
 import Image from "next/image";
 import { useRef, useState, useEffect } from "react";
 import { LuImageUp } from "react-icons/lu";
+import Swal from "sweetalert2";
 
 function CreatePostPage() {
   const { user } = useAuthInfo();
+  const axiosSecure = useAxios();
 
   const fileInputRef = useRef(null);
   const [selectedImages, setSelectedImages] = useState([]);
+  const [text, setText] = useState("");
 
   const handleImageClick = () => {
     fileInputRef.current.click();
@@ -35,6 +39,52 @@ function CreatePostPage() {
     };
   }, [selectedImages]);
 
+  /* send (create-post) data in backend start */
+  const handleSbumit = async (e) => {
+    e.preventDefault();
+
+    if (!text && selectedImages.length === 0) {
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("text", text);
+    formData.append("email", user.email);
+
+    selectedImages.forEach((img) => {
+      formData.append("images", img.file);
+    });
+
+    try {
+      const res = await axiosSecure.post("/create-post", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (res.data.insertedId) {
+        Swal.fire({
+          icon: "success",
+          title: "Successfull",
+          showConfirmButton: false,
+          timer: 2500,
+        });
+      }
+
+      // reset the form
+      setText("");
+      setSelectedImages([]);
+
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        title: "Something went wrong!",
+        text: err.message,
+      });
+    }
+  };
+  /* send (create-post) data in backend end */
+
   return (
     <div className="text-black px-5 py-5">
       <h1 className="text-4xl font-bold">Create Post</h1>
@@ -42,7 +92,7 @@ function CreatePostPage() {
 
       <section className="image-upload-section mt-6">
         <div className="card w-full sm:max-w-md lg:max-w-xl card-sm shadow-sm">
-          <form className="card-body">
+          <form className="card-body" onSubmit={handleSbumit}>
             <section className="flex gap-3 items-center">
               <Image
                 src={user?.photoURL}
@@ -57,8 +107,10 @@ function CreatePostPage() {
             <section className="my-2">
               <textarea
                 className="w-full bg-transparent border-gray-400 border-t-0 border-l-0 border-r-0 border-b-2 outline-0"
-                placeholder="Bio"
-              ></textarea>
+                placeholder="What's on your mind?"
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+              />
             </section>
 
             {/* Multiple Image Preview */}
@@ -89,7 +141,8 @@ function CreatePostPage() {
                 />
 
                 <button
-                  className="text-gray-300 cursor-pointer"
+                type="button"
+                  className="text-gray-300 cursor-pointer image-icon"
                   onClick={handleImageClick}
                 >
                   <LuImageUp size={30} />
