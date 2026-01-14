@@ -13,9 +13,9 @@ const FeedsCardDesign = ({ userImg, userName, createdAt, text, img }) => {
             <Image
               src={userImg}
               alt="user-photo"
-              width={40}
-              height={40}
-              className="rounded-full object-cover"
+              width={100}
+              height={100}
+              className="w-10 h-10 rounded-full object-cover"
             />
 
             <div>
@@ -43,7 +43,7 @@ const FeedsCardDesign = ({ userImg, userName, createdAt, text, img }) => {
               alt={`feed-image-${index}`}
               height={300}
               width={img.length === 1 ? 600 : 300} // single image bigger width
-              className="feed-image object-cover w-full"
+              className="feed-image rounded-[10px] object-cover w-full"
             />
           ))}
         </div>
