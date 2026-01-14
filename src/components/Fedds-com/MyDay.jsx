@@ -125,11 +125,21 @@ const MyDay = () => {
         modules={[FreeMode, Navigation]}
         slidesPerView="auto"
         freeMode={true}
-        spaceBetween={30}
         navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
         onBeforeInit={(swiper) => {
           swiper.params.navigation.prevEl = prevRef.current;
           swiper.params.navigation.nextEl = nextRef.current;
+        }}
+        breakpoints={{
+            0: {
+              spaceBetween: 8,   // mobile
+            },
+            640: {
+              spaceBetween: 12,  // tablet
+            },
+            1024: {
+              spaceBetween: 30,  // desktop
+            },
         }}
         className="py-2"
       >
