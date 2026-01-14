@@ -23,14 +23,11 @@ export default function FeedLayout({ children }) {
   const handleLogOut = () => {
     logOutFunctionality()
       .then(() => Swal.fire({ title: "Logged out", icon: "success" }))
-      .catch((err) =>
-        Swal.fire({ icon: "error", title: err.message })
-      );
+      .catch((err) => Swal.fire({ icon: "error", title: err.message }));
   };
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] lg:grid lg:grid-cols-12">
-
       {/* ================= MOBILE + TABLET TOP BAR (Facebook style) ================= */}
       <header className="lg:hidden sticky top-0 z-50 bg-white border-b px-4 py-2 flex items-center justify-between">
         {/* Logo */}
@@ -56,7 +53,6 @@ export default function FeedLayout({ children }) {
       {/* ================= LEFT SIDEBAR (DESKTOP ONLY) ================= */}
       <aside className="hidden lg:block col-span-2 bg-white border-r border-gray-200">
         <div className="min-h-screen flex flex-col justify-between">
-
           {/* Logo */}
           <div>
             <div className="ps-6 py-4 border-b border-gray-200">
@@ -84,9 +80,9 @@ export default function FeedLayout({ children }) {
             </nav>
 
             {/* Create Post */}
-            <div className="ps-6 mt-6">
+            <div className="ps-6 mt-6 hidden lg:block">
               <Link href="/createPost">
-                <button className="flex items-center gap-3 bg-gradient-to-r from-[#615FFF] to-[#9810FA] text-white px-4 py-2 rounded-xl">
+                <button className="btn w-50 flex gap-3 bg-linear-to-r from-[#615FFF] to-[#9810FA] text-white rounded-xl border-0">
                   <BsPatchPlus /> Create Post
                 </button>
               </Link>
@@ -109,9 +105,7 @@ export default function FeedLayout({ children }) {
                   <p className="text-sm font-medium text-black">
                     {user.displayName}
                   </p>
-                  <p className="text-xs text-gray-500">
-                    {user.email}
-                  </p>
+                  <p className="text-xs text-gray-500">{user.email}</p>
                 </div>
               </div>
               <button onClick={handleLogOut}>
@@ -140,9 +134,7 @@ export default function FeedLayout({ children }) {
             height={300}
             className="rounded-xl mt-3"
           />
-          <h2 className="mt-3 font-semibold text-black">
-            Email marketing
-          </h2>
+          <h2 className="mt-3 font-semibold text-black">Email marketing</h2>
           <p className="text-sm text-gray-400">
             Supercharge your marketing with a powerful platform.
           </p>
