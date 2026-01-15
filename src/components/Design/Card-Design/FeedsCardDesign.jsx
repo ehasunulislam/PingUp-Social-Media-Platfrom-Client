@@ -1,10 +1,18 @@
+import Comments from "@/components/Fedds-com/Comments";
+import LoveReact from "@/components/Fedds-com/LoveReact";
 import Image from "next/image";
 import React from "react";
-import { BiSolidHeart } from "react-icons/bi";
-import { FaRegComment } from "react-icons/fa6";
-import { TbHeart } from "react-icons/tb";
 
-const FeedsCardDesign = ({ userImg, userName, createdAt, text, img }) => {
+const FeedsCardDesign = ({
+  userImg,
+  userName,
+  createdAt,
+  text,
+  img,
+  _id,
+  loveCount = 0,
+  currentUserEmail,
+}) => {
   return (
     <div className="card w-full bg-gray-50 shadow-sm text-black">
       <div className="card-body">
@@ -50,28 +58,14 @@ const FeedsCardDesign = ({ userImg, userName, createdAt, text, img }) => {
       )}
 
       <section className="py-3 ps-4 flex gap-8">
-        <div className="like-btn flex items-center gap-2">
-          <label className="swap swap-flip text-[1.5rem]">
-            {/* this hidden checkbox controls the state */}
-            <input type="checkbox" />
+        <LoveReact
+          loveId={_id}
+          currentUserEmail={currentUserEmail}
+          initialCount={loveCount}
+        />
 
-            <div className="swap-on text-red-600">
-              <BiSolidHeart />
-            </div>
-            <div className="swap-off text-black">
-              <TbHeart />
-            </div>
-          </label>
-
-          <p>0</p>
-        </div>
-
-        <div className="comment-btn flex items-center gap-2 text-[1.2rem] cursor-pointer">
-          <button className="cursor-pointer">
-            <FaRegComment />
-          </button>
-          <p>0</p>
-        </div>
+        
+        <Comments />
       </section>
     </div>
   );

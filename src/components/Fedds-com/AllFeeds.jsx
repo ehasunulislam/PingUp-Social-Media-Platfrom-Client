@@ -4,11 +4,13 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import FeedsCardDesign from "../Design/Card-Design/FeedsCardDesign";
 import useAxios from "@/Hooks/useAxios";
+import useAuthInfo from "@/Hooks/useAuthInfo";
 
 const AllFeeds = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const axiosSecure = useAxios();
+  const {user} = useAuthInfo();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,11 +47,14 @@ const AllFeeds = () => {
         return (
           <FeedsCardDesign
             key={item._id}
+            _id={item._id}
             userImg={item.userImg}
             userName={item.userName}
             createdAt={item.createdAt}
             text={item.text}
             img={item.img}
+            loveCount={item.loveCount}
+            currentUserEmail={user?.email}
           />
         );
       })}
