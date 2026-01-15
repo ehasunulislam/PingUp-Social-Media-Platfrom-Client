@@ -91,27 +91,25 @@ export default function FeedLayout({ children }) {
 
           {/* User Info */}
           {user && (
-            <div className="border-t border-gray-200 px-4 py-4 flex items-center justify-between">
-              <div className="flex gap-3 items-center">
-                <div className="relative w-10 h-10 rounded-full overflow-hidden">
-                  <Image
-                    src={user.photoURL}
-                    alt="User"
-                    fill
-                    className="object-cover"
-                  />
+            <Link
+              href="/profile"
+              className="border-t py-4 px-4 border border-t-gray-200"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex gap-3 items-center">
+                  <div className="relative w-10 h-10 rounded-full overflow-hidden">
+                    <Image src={user.photoURL} alt="User" fill />
+                  </div>
+                  <div className="hidden lg:block">
+                    <p className="text-sm text-gray-500 font-medium">
+                      {user.displayName}
+                    </p>
+                    <p className="text-xs text-gray-500">{user.email}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-black">
-                    {user.displayName}
-                  </p>
-                  <p className="text-xs text-gray-500">{user.email}</p>
-                </div>
+                <HiMiniArrowRightStartOnRectangle />
               </div>
-              <button onClick={handleLogOut}>
-                <HiMiniArrowRightStartOnRectangle className="text-lg" />
-              </button>
-            </div>
+            </Link>
           )}
         </div>
       </aside>

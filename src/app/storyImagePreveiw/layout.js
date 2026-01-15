@@ -6,62 +6,84 @@ import Link from "next/link";
 import Image from "next/image";
 import { HiMiniArrowRightStartOnRectangle } from "react-icons/hi2";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import MobileLink from "@/components/Active-Links/Links-for-mobile/MobileLink";
 
 export default function StoryImageUploadLayout({ children }) {
   const { user } = useAuthInfo();
   const queryClient = new QueryClient();
 
   return (
-    <div className="grid grid-cols-12 min-h-screen bg-[#F8FAFC]">
-      {/* LEFT SIDEBAR */}
-      <div className="col-span-2 bg-white border border-r-gray-200">
-        <div className="min-h-screen relative">
+    <div className="min-h-screen bg-[#F8FAFC] lg:grid lg:grid-cols-12">
+      {/* ================= MOBILE + TABLET TOP BAR (Facebook style) ================= */}
+      <header className="lg:hidden sticky top-0 z-50 bg-white border-b px-4 py-2 flex items-center justify-between">
+        {/* Logo */}
+        <Link href="/feeds">
+          <Logo />
+        </Link>
 
-          <section className="ps-6 py-2 border border-b-gray-200">
-            <Link href="/home">
-              <Logo />
-            </Link>
-          </section>
+        {/* Right actions */}
+        {user && (
+          <Link href="/profile">
+            <div className="relative w-9 h-9 rounded-full overflow-hidden">
+              <Image
+                src={user.photoURL}
+                alt="User"
+                fill
+                className="object-cover"
+              />
+            </div>
+          </Link>
+        )}
+      </header>
 
-
-          <div className="w-full">
-            <h3 className="text-black px-4 text-2xl font-semibold">Your Story</h3>
-
-           <div className="pt-4">
-             {user ? (
-              <Link href="/profile"> 
-                <div className="flex justify-between px-4 items-center">
-                  <div className="flex gap-3 items-center">
-                    <div className="flex gap-3 items-center">
-                       <div className="relative w-10 h-10 rounded-full overflow-hidden">
-                          <Image src={user.photoURL} alt="User" fill />
-                        </div>
-                        <div className="text-black">
-                          <p className="text-sm">{user.displayName}</p>
-                        </div>
-                    </div>
-                  </div>
-
-                  <div> 
-                    <HiMiniArrowRightStartOnRectangle className="text-black" />
-                  </div>
-                </div>
+      {/* ================= LEFT SIDEBAR (DESKTOP ONLY) ================= */}
+      <aside className="hidden lg:block col-span-2 bg-white border-r border-gray-200">
+        <div className="min-h-screen flex flex-col justify-between">
+          {/* Logo */}
+          <div>
+            <div className="ps-6 py-4 border-b border-gray-200">
+              <Link href="/feeds">
+                <Logo />
               </Link>
-            ) : (
-              <p className="text-center">User Not Found</p>
-            )}
-           </div>
+            </div>
           </div>
 
+          {/* User Info */}
+          {user && (
+            <Link
+              href="/profile"
+              className="border-t py-4 px-4 border border-t-gray-200"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex gap-3 items-center">
+                  <div className="relative w-10 h-10 rounded-full overflow-hidden">
+                    <Image src={user.photoURL} alt="User" fill />
+                  </div>
+                  <div className="hidden lg:block">
+                    <p className="text-sm text-gray-500 font-medium">
+                      {user.displayName}
+                    </p>
+                    <p className="text-xs text-gray-500">{user.email}</p>
+                  </div>
+                </div>
+                <HiMiniArrowRightStartOnRectangle />
+              </div>
+            </Link>
+          )}
         </div>
-      </div>
+      </aside>
 
-      {/* MAIN CONTENT */}
-      <div className="col-span-6">
+      {/* ================= MAIN CONTENT ================= */}
+      <main className="col-span-12 lg:col-span-6 h-screen overflow-y-auto pb-16 mt-6">
         <QueryClientProvider client={queryClient}>
           {children}
         </QueryClientProvider>
-      </div>
+      </main>
+
+      {/* ================= MOBILE + TABLET BOTTOM NAV ================= */}
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t">
+        <MobileLink />
+      </nav>
     </div>
   );
 }
