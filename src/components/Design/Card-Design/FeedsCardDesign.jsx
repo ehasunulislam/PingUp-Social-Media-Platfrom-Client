@@ -64,7 +64,6 @@ const FeedsCardDesign = ({
           initialCount={loveCount}
         />
 
-        
         <Comments />
       </section>
     </div>
