@@ -15,6 +15,7 @@ import { HiMiniArrowRightStartOnRectangle } from "react-icons/hi2";
 import ActiveLinks from "@/components/Active-Links/ActiveLinks";
 import MobileLink from "@/components/Active-Links/Links-for-mobile/MobileLink";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import LayoutLinks from "@/components/Layout-Links/LayoutLinks";
 
 export default function FeedLayout({ children }) {
   const { user, logOutFunctionality } = useAuthInfo();
@@ -62,22 +63,7 @@ export default function FeedLayout({ children }) {
             </div>
 
             {/* Navigation */}
-            <nav className="ps-6 mt-6 space-y-2 text-black">
-              <ActiveLinks href="/feeds">
-                <BiHomeAlt className="text-xl" />
-                <span>Feed</span>
-              </ActiveLinks>
-
-              <ActiveLinks href="/connections">
-                <LuUsersRound className="text-xl" />
-                <span>Connections</span>
-              </ActiveLinks>
-
-              <ActiveLinks href="/profile">
-                <TfiUser className="text-xl" />
-                <span>Profile</span>
-              </ActiveLinks>
-            </nav>
+            <LayoutLinks />
 
             {/* Create Post */}
             <div className="ps-6 mt-6 hidden lg:block">

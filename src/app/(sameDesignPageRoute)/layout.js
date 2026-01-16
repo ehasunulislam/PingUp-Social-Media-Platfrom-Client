@@ -12,6 +12,7 @@ import { HiMiniArrowRightStartOnRectangle } from "react-icons/hi2";
 import ActiveLinks from "@/components/Active-Links/ActiveLinks";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import MobileLink from "@/components/Active-Links/Links-for-mobile/MobileLink";
+import LayoutLinks from "@/components/Layout-Links/LayoutLinks";
 
 export default function SameDesignPageRouteLayout({ children }) {
   const { user } = useAuthInfo();
@@ -31,20 +32,7 @@ export default function SameDesignPageRouteLayout({ children }) {
             </div>
 
             {/* Navigation */}
-            <div className="ps-6 mt-6 space-y-2 text-black">
-              <ActiveLinks href="/feeds">
-                <BiHomeAlt /> <span className="hidden lg:inline">Feed</span>
-              </ActiveLinks>
-
-              <ActiveLinks href="/connections">
-                <LuUsersRound />{" "}
-                <span className="hidden lg:inline">Connections</span>
-              </ActiveLinks>
-
-              <ActiveLinks href="/profile">
-                <TfiUser /> <span className="hidden lg:inline">Profile</span>
-              </ActiveLinks>
-            </div>
+            <LayoutLinks />
 
             {/* Create Post */}
             <div className="ps-6 mt-6 hidden lg:block">
