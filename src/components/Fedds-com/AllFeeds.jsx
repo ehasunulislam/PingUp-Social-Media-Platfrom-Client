@@ -55,6 +55,7 @@ const AllFeeds = () => {
             img={item.img}
             loveCount={item.loveCount}
             currentUserEmail={user?.email}
+            commentCount={item.commentCount}
           />
         );
       })}

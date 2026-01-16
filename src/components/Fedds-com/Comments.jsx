@@ -1,11 +1,44 @@
 "use client";
-import React, { useRef } from "react";
+import useAxios from "@/Hooks/useAxios";
+import React, { useRef, useState } from "react";
 import { FaRegComment } from "react-icons/fa6";
+import Swal from "sweetalert2";
 
-const Comments = () => {
+const Comments = ({ postId, currentUserEmail, initialCount = 0 }) => {
   const writeCommentModal = useRef(null);
+  const [commentText, setCommentText] = useState("");
+  const [count, setCount] = useState(initialCount);
+  const [loading, setLoading] = useState(false);
+  const axiosSecure = useAxios();
+
+  // show the modal functionality
   const openCommentModal = () => {
     writeCommentModal.current?.showModal();
+  };
+
+  // handle submit comment funcitonality
+  const handleSubmitComment = async (e) => {
+    e.preventDefault();
+
+    try {
+      setLoading(true);
+
+      const res = await axiosSecure.post("/feeds-comments", {
+        postId,
+        userEmail: currentUserEmail,
+        text: commentText,
+      });
+
+      setCount(res.data.commentCount);
+      setCommentText("");
+      writeCommentModal.current?.close();
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: err.message,
+      });
+    }
   };
 
   return (
@@ -14,7 +47,7 @@ const Comments = () => {
         <button className="cursor-pointer">
           <FaRegComment />
         </button>
-        <p>0</p>
+        <p>{count}</p>
       </section>
 
       {/* write a comment modal */}
@@ -23,20 +56,32 @@ const Comments = () => {
         className="modal modal-bottom sm:modal-middle"
       >
         <div className="modal-box bg-white">
-          <textarea
-            className="textarea bg-gray-200 w-full"
-            placeholder="write your comment"
-          ></textarea>
-          <div className="modal-action">
-            <form method="dialog">
-              <div className="flex gap-2">
-                <button className="btn bg-linear-to-r from-[#615FFF] to-[#9810FA] text-white border-0">
-                  Submit
-                </button>
-                <button className="btn">Close</button>
-              </div>
-            </form>
-          </div>
+          <form onSubmit={handleSubmitComment}>
+            <textarea
+              className="textarea bg-gray-200 w-full"
+              placeholder="Write your comment..."
+              value={commentText}
+              onChange={(e) => setCommentText(e.target.value)}
+            />
+
+            <div className="modal-action">
+              <button
+                type="submit"
+                disabled={loading}
+                className="btn bg-linear-to-r from-[#615FFF] to-[#9810FA] text-white border-0"
+              >
+                {loading ? "Posting..." : "Submit"}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => writeCommentModal.current?.close()}
+                className="btn"
+              >
+                Close
+              </button>
+            </div>
+          </form>
         </div>
       </dialog>
     </div>

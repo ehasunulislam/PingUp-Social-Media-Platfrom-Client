@@ -141,6 +141,10 @@ export default function FeedLayout({ children }) {
         <div className="bg-white rounded-xl shadow-sm p-5 mt-5">
           <h3 className="font-bold text-black">Recent Messages</h3>
         </div>
+
+        <button className="btn" onClick={handleLogOut}>
+          <p>logout</p>
+        </button>
       </aside>
 
       {/* ================= MOBILE + TABLET BOTTOM NAV ================= */}

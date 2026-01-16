@@ -11,6 +11,7 @@ const FeedsCardDesign = ({
   img,
   _id,
   loveCount = 0,
+  commentCount = 0,
   currentUserEmail,
 }) => {
   return (
@@ -64,7 +65,11 @@ const FeedsCardDesign = ({
           initialCount={loveCount}
         />
 
-        <Comments />
+        <Comments
+          postId={_id}
+          currentUserEmail={currentUserEmail}
+          initialCount={commentCount}
+        />
       </section>
     </div>
   );
