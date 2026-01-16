@@ -1,4 +1,5 @@
 import Comments from "@/components/Fedds-com/Comments";
+import CommentsByUserAll from "@/components/Fedds-com/CommentsByUserAll";
 import LoveReact from "@/components/Fedds-com/LoveReact";
 import Image from "next/image";
 import React from "react";
@@ -58,18 +59,24 @@ const FeedsCardDesign = ({
         </div>
       )}
 
-      <section className="py-3 ps-4 flex gap-8">
-        <LoveReact
-          loveId={_id}
-          currentUserEmail={currentUserEmail}
-          initialCount={loveCount}
-        />
+      <section className="py-3 ps-4 flex justify-between">
+        <div className="flex gap-8">
+          <LoveReact
+            loveId={_id}
+            currentUserEmail={currentUserEmail}
+            initialCount={loveCount}
+          />
 
-        <Comments
-          postId={_id}
-          currentUserEmail={currentUserEmail}
-          initialCount={commentCount}
-        />
+          <Comments
+            postId={_id}
+            currentUserEmail={currentUserEmail}
+            initialCount={commentCount}
+          />
+        </div>
+
+        <div className="pe-3">
+          <CommentsByUserAll postId={_id} />
+        </div>
       </section>
     </div>
   );
