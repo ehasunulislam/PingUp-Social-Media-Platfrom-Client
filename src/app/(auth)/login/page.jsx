@@ -66,6 +66,7 @@ export default function Login() {
       const signInUser = result.user;
 
       const userData = {
+        uid: signInUser.uid,
         name: signInUser.displayName, 
         email: signInUser.email,
         img: signInUser.photoURL,

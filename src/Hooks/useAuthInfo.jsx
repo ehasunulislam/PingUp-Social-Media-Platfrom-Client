@@ -7,6 +7,4 @@ const useAuthInfo = () => {
   return authInfo;
 }
 
-export default useAuthInfo
-
-// get all element all of hegher of in   1 *6
+export default useAuthInfo;

@@ -77,6 +77,7 @@ export default function Register() {
 
       // send user in database
       const userData = {
+        uid: user.uid,
         name: data.name,
         email: data.email, 
         img: imageData,
@@ -113,6 +114,7 @@ export default function Register() {
       const signInUser = result.user;
 
       const userData = {
+        uid: signInUser.uid,
         name: signInUser.displayName, 
         email: signInUser.email,
         img: signInUser.photoURL,
