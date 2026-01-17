@@ -11,18 +11,14 @@ import useAuthInfo from "@/Hooks/useAuthInfo";
 import { useQuery } from "@tanstack/react-query";
 
 const MobileLink = () => {
-  const axiosSecure = useAxios();
-  const { user: authUser } = useAuthInfo();
-  const email = authUser?.email;
+  const {user, loading} = useAuthInfo();
 
-  const { data: user = {} } = useQuery({
-    queryKey: ["user", email],
-    queryFn: async () => {
-      const res = await axiosSecure.get(`/user/${email}`);
-      return res.data;
-    },
-  });
-
+  if(loading) {
+    return(
+      <div className="ps-6 mt-6 text-gray-400">Loading...</div>
+    )
+  }
+ 
   return (
     <div className="flex justify-around py-3 text-xl">
       <ActiveMobileLink href="/feeds">
@@ -38,7 +34,7 @@ const MobileLink = () => {
       </ActiveMobileLink>
 
       {user?.email && (
-        <ActiveMobileLink href={`/profile/${user.email}`}>
+        <ActiveMobileLink href={`/profile/${user.uid}`}>
           <TfiUser /> <span className="hidden lg:inline">Profile</span>
         </ActiveMobileLink>
       )}
