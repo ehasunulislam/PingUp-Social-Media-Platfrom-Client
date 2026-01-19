@@ -21,12 +21,7 @@ const ProfileCard = ({ userData, currentUser }) => {
   /* Edit my profile modal functionality end */
 
   /* react-hook-form functionality start */
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit, reset, formState: { errors }} = useForm();
 
   const handleEditModalFrom = (data) => {
     console.log(data);
