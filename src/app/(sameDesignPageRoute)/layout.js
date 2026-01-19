@@ -10,6 +10,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import MobileLink from "@/components/Active-Links/Links-for-mobile/MobileLink";
 import LayoutLinks from "@/components/Active-Links/Layout-Links/LayoutLinks";
 import CreatePostBtn from "@/components/Active-Links/Create-Post-Btn/CreatePostBtn";
+import LayoutInUser from "@/components/Active-Links/Layout-Links/LayoutInUser";
 
 export default function SameDesignPageRouteLayout({ children }) {
   const { user } = useAuthInfo();
@@ -57,24 +58,7 @@ export default function SameDesignPageRouteLayout({ children }) {
             </div>
 
             {/* User Info */}
-            {user && (
-              <section className="border-t py-4 px-4 border border-t-gray-200">
-                <div className="flex items-center justify-between">
-                  <div className="flex flex-col text-center gap-3 items-center">
-                    <div className="relative w-10 h-10 rounded-full overflow-hidden">
-                      <Image src={user.photoURL} alt="User" fill />
-                    </div>
-                    <div className="hidden lg:block">
-                      <p className="text-sm text-gray-500 font-medium">
-                        {user.displayName}
-                      </p>
-                      <p className="text-xs text-gray-500">{user.email}</p>
-                    </div>
-                  </div>
-                  <HiMiniArrowRightStartOnRectangle />
-                </div>
-              </section>
-            )}
+            <LayoutInUser />
           </div>
         </aside>
 
