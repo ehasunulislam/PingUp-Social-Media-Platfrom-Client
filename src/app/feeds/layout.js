@@ -10,6 +10,7 @@ import { HiMiniArrowRightStartOnRectangle } from "react-icons/hi2";
 import MobileLink from "@/components/Active-Links/Links-for-mobile/MobileLink";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import LayoutLinks from "@/components/Active-Links/Layout-Links/LayoutLinks";
+import CreatePostBtn from "@/components/Active-Links/Create-Post-Btn/CreatePostBtn";
 
 export default function FeedLayout({ children }) {
   const { user, logOutFunctionality } = useAuthInfo();
@@ -59,13 +60,7 @@ export default function FeedLayout({ children }) {
               <LayoutLinks />
 
               {/* Create Post */}
-              <div className="ps-6 mt-6 hidden lg:block">
-                <Link href="/createPost">
-                  <button className="btn w-50 flex gap-3 bg-linear-to-r from-[#615FFF] to-[#9810FA] text-white rounded-xl border-0">
-                    <BsPatchPlus /> Create Post
-                  </button>
-                </Link>
-              </div>
+              <CreatePostBtn />
             </div>
 
             {/* User Info */}
@@ -76,7 +71,7 @@ export default function FeedLayout({ children }) {
                 <div className="flex items-center justify-between">
                   <div className="flex flex-col text-center gap-3 items-center">
                     <div className="relative w-10 h-10 rounded-full overflow-hidden">
-                      <Image src={user.photoURL} alt="User" fill />
+                      <Image src={user.photoURL} alt="User" fill  className="object-cover rounded-full" />
                     </div>
                     <div className="hidden lg:block">
                       <p className="text-sm text-gray-500 font-medium">

@@ -9,6 +9,7 @@ import { HiMiniArrowRightStartOnRectangle } from "react-icons/hi2";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import MobileLink from "@/components/Active-Links/Links-for-mobile/MobileLink";
 import LayoutLinks from "@/components/Active-Links/Layout-Links/LayoutLinks";
+import CreatePostBtn from "@/components/Active-Links/Create-Post-Btn/CreatePostBtn";
 
 export default function SameDesignPageRouteLayout({ children }) {
   const { user } = useAuthInfo();
@@ -52,13 +53,7 @@ export default function SameDesignPageRouteLayout({ children }) {
               <LayoutLinks />
 
               {/* Create Post */}
-              <div className="ps-6 mt-6 hidden lg:block">
-                <Link href="/createPost">
-                  <button className="btn w-50 flex gap-3 bg-linear-to-r from-[#615FFF] to-[#9810FA] text-white rounded-xl border-0">
-                    <BsPatchPlus /> Create Post
-                  </button>
-                </Link>
-              </div>
+              <CreatePostBtn />
             </div>
 
             {/* User Info */}
