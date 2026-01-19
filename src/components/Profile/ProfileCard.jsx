@@ -1,12 +1,18 @@
+/* eslint-disable react-hooks/refs */
 "use client";
+import useAuthInfo from "@/Hooks/useAuthInfo";
+import useAxios from "@/Hooks/useAxios";
 import Image from "next/image";
 import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { BiSolidEditAlt } from "react-icons/bi";
 import { CiMedicalCross } from "react-icons/ci";
+import Swal from "sweetalert2";
 
 const ProfileCard = ({ userData, currentUser }) => {
   const isOwnProfile = userData?.uid === currentUser?.uid;
+  const axiosSecure = useAxios();
+  const {user} = useAuthInfo();
 
   /* Edit my profile modal functionality start */
   const editProfileModal = useRef(null);
@@ -21,10 +27,37 @@ const ProfileCard = ({ userData, currentUser }) => {
   /* Edit my profile modal functionality end */
 
   /* react-hook-form functionality start */
-  const { register, handleSubmit, reset, formState: { errors }} = useForm();
+  const { register, handleSubmit, reset, formState: { errors },} = useForm();
 
-  const handleEditModalFrom = (data) => {
+  const handleEditModalFrom = async (data) => {
     console.log(data);
+
+    const editData = {
+      ...data,
+      email: user.email,
+    };
+
+    try {
+      const res = await axiosSecure.patch("/update-user", editData);
+
+      if(res.data.success) {
+        Swal.fire({
+          icon: "success",
+          title: "Updated!",
+          text: "Profile updated successfully",
+        });
+
+        reset();
+        closeEditProfileModalFunction();
+      }
+
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "not updated",
+      });
+    }
   };
   /* react-hook-form functionality end */
 
@@ -131,7 +164,7 @@ const ProfileCard = ({ userData, currentUser }) => {
                 <section className="flex gap-3 flex-col md:flex-row">
                   <input
                     type="text"
-                    placeholder="Add Your Hometown"
+                    placeholder="Add Your Country"
                     className="input bg-transparent border border-gray-300 w-full"
                     {...register("hometown")}
                   />
@@ -142,7 +175,8 @@ const ProfileCard = ({ userData, currentUser }) => {
                     className="input bg-transparent border border-gray-300 w-full"
                     {...register("website", {
                       pattern: {
-                        value: /^(https?:\/\/)?([\w.-]+)+[:\d]*?(\/[\w.-]*)*\/?$/,
+                        value:
+                          /^(https?:\/\/)?([\w.-]+)+[:\d]*?(\/[\w.-]*)*\/?$/,
                         message: "Invalid URL",
                       },
                     })}

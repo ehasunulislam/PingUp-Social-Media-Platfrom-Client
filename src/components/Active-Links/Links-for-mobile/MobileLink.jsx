@@ -6,9 +6,7 @@ import { BsPatchPlus } from "react-icons/bs";
 import { LuUsersRound } from "react-icons/lu";
 import { TfiUser } from "react-icons/tfi";
 import ActiveMobileLink from "./ActiveMobileLink";
-import useAxios from "@/Hooks/useAxios";
 import useAuthInfo from "@/Hooks/useAuthInfo";
-import { useQuery } from "@tanstack/react-query";
 
 const MobileLink = () => {
   const {user, loading} = useAuthInfo();

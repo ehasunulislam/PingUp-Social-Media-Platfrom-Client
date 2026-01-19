@@ -6,7 +6,6 @@ import useAuthInfo from "@/Hooks/useAuthInfo";
 import useAxios from "@/Hooks/useAxios";
 import PrivateRoutes from "@/Routes/PrivateRoutes";
 import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
 import { useParams } from "next/navigation";
 
 function MyProfile() {
@@ -14,11 +13,7 @@ function MyProfile() {
   const { user: currentUser } = useAuthInfo();
   const axiosSecure = useAxios();
 
-  const {
-    data: userData,
-    isLoading,
-    isError,
-  } = useQuery({
+  const { data: userData, isLoading, isError } = useQuery({
     queryKey: ["user", id],
     queryFn: async () => {
       const res = await axiosSecure.get(`/user/${id}`);
@@ -44,7 +39,7 @@ function MyProfile() {
   }
 
   return (
-    <div className="text-black min-h-screen bg-gray-50 py-10">
+    <div className="text-black min-h-screen bg-gray-50 py-10 flex-col justify-center items-center">
       <ProfileCard userData={userData} currentUser={currentUser} />
     </div>
   );
