@@ -1,6 +1,7 @@
 "use client";
 import Error from "@/components/Animation/Error/Error";
 import Loading from "@/components/Animation/Loading/Loading";
+import FilterPosts from "@/components/Profile/Filter-Posts/FilterPosts";
 import ProfileCard from "@/components/Profile/Profile-Card/ProfileCard";
 import useAuthInfo from "@/Hooks/useAuthInfo";
 import useAxios from "@/Hooks/useAxios";
@@ -41,6 +42,7 @@ function MyProfile() {
   return (
     <div className="text-black min-h-screen bg-gray-50 py-10 flex-col justify-center items-center">
       <ProfileCard userData={userData} currentUser={currentUser} />
+      <FilterPosts />
     </div>
   );
 }
