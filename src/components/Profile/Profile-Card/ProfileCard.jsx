@@ -8,11 +8,14 @@ import { useForm } from "react-hook-form";
 import { BiSolidEditAlt } from "react-icons/bi";
 import { CiMedicalCross } from "react-icons/ci";
 import Swal from "sweetalert2";
+import UpdateProfile from "./UpdateProfile";
+import { useQueryClient } from "@tanstack/react-query";
 
 const ProfileCard = ({ userData, currentUser }) => {
   const isOwnProfile = userData?.uid === currentUser?.uid;
   const axiosSecure = useAxios();
   const {user} = useAuthInfo();
+  const queryClient = useQueryClient();
 
   /* Edit my profile modal functionality start */
   const editProfileModal = useRef(null);
@@ -46,6 +49,8 @@ const ProfileCard = ({ userData, currentUser }) => {
           title: "Updated!",
           text: "Profile updated successfully",
         });
+
+        queryClient.invalidateQueries(["user"])
 
         reset();
         closeEditProfileModalFunction();
@@ -166,7 +171,7 @@ const ProfileCard = ({ userData, currentUser }) => {
                     type="text"
                     placeholder="Add Your Country"
                     className="input bg-transparent border border-gray-300 w-full"
-                    {...register("hometown")}
+                    {...register("country")}
                   />
 
                   <input
@@ -198,6 +203,10 @@ const ProfileCard = ({ userData, currentUser }) => {
             </div>
           </dialog>
         </section>
+      </div>
+
+      <div>
+        <UpdateProfile  />
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 "use client";
 import Error from "@/components/Animation/Error/Error";
 import Loading from "@/components/Animation/Loading/Loading";
-import ProfileCard from "@/components/Profile/ProfileCard";
+import ProfileCard from "@/components/Profile/Profile-Card/ProfileCard";
 import useAuthInfo from "@/Hooks/useAuthInfo";
 import useAxios from "@/Hooks/useAxios";
 import PrivateRoutes from "@/Routes/PrivateRoutes";

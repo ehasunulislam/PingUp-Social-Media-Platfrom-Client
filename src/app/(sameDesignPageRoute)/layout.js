@@ -4,8 +4,6 @@ import Logo from "@/components/Logo/Logo";
 import useAuthInfo from "@/Hooks/useAuthInfo";
 import Link from "next/link";
 import Image from "next/image";
-import { BsPatchPlus } from "react-icons/bs";
-import { HiMiniArrowRightStartOnRectangle } from "react-icons/hi2";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import MobileLink from "@/components/Active-Links/Links-for-mobile/MobileLink";
 import LayoutLinks from "@/components/Active-Links/Layout-Links/LayoutLinks";
