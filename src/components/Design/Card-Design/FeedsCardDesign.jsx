@@ -39,7 +39,8 @@ const FeedsCardDesign = ({
           </div>
         </section>
       </div>
-      {/* show the signle or multiple image  */}
+
+      {/* show the single or multiple image  */}
       {img && img.length > 0 && (
         <div
           className={`px-5 pb-2 grid gap-2 rounded-[10px] ${
@@ -52,7 +53,7 @@ const FeedsCardDesign = ({
               src={imageUrl}
               alt={`feed-image-${index}`}
               height={300}
-              width={img.length === 1 ? 600 : 300} // single image bigger width
+              width={img.length === 1 ? 600 : 300} 
               className="feed-image rounded-[10px] object-cover w-full"
             />
           ))}
