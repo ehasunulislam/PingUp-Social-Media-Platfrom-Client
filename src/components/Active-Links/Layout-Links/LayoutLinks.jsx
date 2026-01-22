@@ -5,6 +5,7 @@ import { BiHomeAlt } from "react-icons/bi";
 import { LuUsersRound } from "react-icons/lu";
 import { TfiUser } from "react-icons/tfi";
 import useAuthInfo from "@/Hooks/useAuthInfo";
+import { IoSearchSharp } from "react-icons/io5";
 
 const LayoutLinks = () => {
   const { user, loading } = useAuthInfo();
@@ -23,12 +24,15 @@ const LayoutLinks = () => {
         <LuUsersRound />
         <span className="hidden lg:inline">Connections</span>
       </ActiveLinks>
+      
+      <ActiveLinks href="/discover">
+        <IoSearchSharp />
+        <span className="hidden lg:inline">Discover</span>
+      </ActiveLinks>
 
-      {user?.uid && (
-        <ActiveLinks href={`/profile/${user.uid}`}>
-          <TfiUser /> <span className="hidden lg:inline">Profile</span>
-        </ActiveLinks>
-      )}
+      <ActiveLinks href={`/profile/${user.uid}`}>
+        <TfiUser /> <span className="hidden lg:inline">Profile</span>
+      </ActiveLinks>
     </nav>
   );
 };
