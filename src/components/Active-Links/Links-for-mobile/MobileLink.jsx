@@ -7,16 +7,15 @@ import { LuUsersRound } from "react-icons/lu";
 import { TfiUser } from "react-icons/tfi";
 import ActiveMobileLink from "./ActiveMobileLink";
 import useAuthInfo from "@/Hooks/useAuthInfo";
+import { IoSearchSharp } from "react-icons/io5";
 
 const MobileLink = () => {
-  const {user, loading} = useAuthInfo();
+  const { user, loading } = useAuthInfo();
 
-  if(loading) {
-    return(
-      <div className="ps-6 mt-6 text-gray-400">Loading...</div>
-    )
+  if (loading) {
+    return <div className="ps-6 mt-6 text-gray-400">Loading...</div>;
   }
- 
+
   return (
     <div className="flex justify-around py-3 text-xl">
       <ActiveMobileLink href="/feeds">
@@ -25,6 +24,10 @@ const MobileLink = () => {
 
       <ActiveMobileLink href="/connections">
         <LuUsersRound />
+      </ActiveMobileLink>
+
+      <ActiveMobileLink href="/discover">
+        <IoSearchSharp />
       </ActiveMobileLink>
 
       <ActiveMobileLink href="/createPost">

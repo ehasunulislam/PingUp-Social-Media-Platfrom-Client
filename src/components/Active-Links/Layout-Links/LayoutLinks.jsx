@@ -24,15 +24,17 @@ const LayoutLinks = () => {
         <LuUsersRound />
         <span className="hidden lg:inline">Connections</span>
       </ActiveLinks>
-      
+
       <ActiveLinks href="/discover">
         <IoSearchSharp />
         <span className="hidden lg:inline">Discover</span>
       </ActiveLinks>
 
-      <ActiveLinks href={`/profile/${user.uid}`}>
-        <TfiUser /> <span className="hidden lg:inline">Profile</span>
-      </ActiveLinks>
+      {user && (
+        <ActiveLinks href={`/profile/${user.uid}`}>
+          <TfiUser /> <span className="hidden lg:inline">Profile</span>
+        </ActiveLinks>
+      )}
     </nav>
   );
 };

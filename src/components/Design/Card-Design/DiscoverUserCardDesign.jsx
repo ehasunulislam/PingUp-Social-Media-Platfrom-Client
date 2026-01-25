@@ -17,11 +17,11 @@ const DiscoverUserCardDesign = ({ img, name, email }) => {
           className="object-cover rounded-full"
         />
       </figure>
-      <div className="card-body w-full text-center">
-        <h4 className="text-[0.75rem] font-bold">{name}</h4>
+      <div className="card-body w-full text-center px-0 pt-3">
+        <h4 className="text-[0.593rem] md:text-[0.75rem] font-bold">{name}</h4>
         {/* <p>{email}</p> */}
         <div className="card-actions w-full flex flex-col justify-center items-center text-center">
-          <button className="btn btn-primary btn-sm">Connect</button>
+          <button className="btn border border-gray-600 bg-transparent text-gray-400 btn-sm rounded-[20px] px-5">Connect</button>
         </div>
       </div>
     </div>

@@ -22,7 +22,7 @@ function Discover() {
   return (
     <div className="text-black mb-5">
       <div className="mt-3 space-y-1">
-        <h2 className="text-3xl font-bold">Discover People</h2>
+        <h2 className="text-2xl md:text-3xl font-bold">Discover People</h2>
         <p className="text-[0.9rem]">
           Connect with amazing people and grow your network
         </p>
@@ -34,7 +34,7 @@ function Discover() {
               <input
                 type="search"
                 className="grow outline-0"
-                placeholder="Search people by name"
+                placeholder="Search by name"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
@@ -46,7 +46,7 @@ function Discover() {
               <span className="loading loading-spinner text-primary text-2xl"></span>
             </div>
           ) : (
-            <section className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <section className="mt-4 grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4">
               {userAll.length === 0 ? (
                 <p>No users found</p>
               ) : (
