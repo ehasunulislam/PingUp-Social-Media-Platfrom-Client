@@ -1,6 +1,5 @@
 "use client";
 import DiscoverUserCardDesign from "@/components/Design/Card-Design/DiscoverUserCardDesign";
-import useAuthInfo from "@/Hooks/useAuthInfo";
 import useAxios from "@/Hooks/useAxios";
 import PrivateRoutes from "@/Routes/PrivateRoutes";
 import { useQuery } from "@tanstack/react-query";
