@@ -16,7 +16,9 @@ const DiscoverUserCardDesign = ({ img, name, email }) => {
     // send request
     if(status === "none") {
       const res = await axiosSecure.post("/friend-request/send", {
+        senderName: user.name,
         senderEmail: user.email,
+        receiverName: name,
         receiverEmail: email,
       });
   
@@ -26,7 +28,9 @@ const DiscoverUserCardDesign = ({ img, name, email }) => {
     if(status === "pending") {
       const res = await axiosSecure.delete("/friend-request/cancel", {
         data: {
+          senderName: user.name,
           senderEmail: user.email,
+          receiverName: name,
           receiverEmail: email,
         }
       });
