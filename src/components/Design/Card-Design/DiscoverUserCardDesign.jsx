@@ -4,6 +4,8 @@ import useAuthInfo from "@/Hooks/useAuthInfo";
 import useAxios from "@/Hooks/useAxios";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import { FiUserPlus } from "react-icons/fi";
+
 
 const DiscoverUserCardDesign = ({ img, name, email }) => {
   const { user } = useAuthInfo();
@@ -70,9 +72,10 @@ const DiscoverUserCardDesign = ({ img, name, email }) => {
         <div className="card-actions w-full flex flex-col justify-center items-center text-center">
           <button
 
-            className={`px-6 py-1 bg-transparent border border-gray-400 text-black rounded-full cursor-pointer ${status === "pending" ? "text-gray-400" : ""}`}
+            className={`flex gap-2 items-center px-6 py-2  border border-gray-400  rounded-[3px] cursor-pointer ${status === "pending" ? "bg-black text-white" : "bg-purple-700 text-white"}`}
             onClick={handleConnect}
           >
+            <FiUserPlus />
             {status === "none" && "connect"}
             {status === "pending" && "Pending"}
             {status === "connected" && "Connected"}
