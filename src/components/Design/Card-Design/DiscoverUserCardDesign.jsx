@@ -76,7 +76,7 @@ const DiscoverUserCardDesign = ({ img, name, email }) => {
         {/* <p>{email}</p> */}
         <div className="card-actions w-full flex flex-col justify-center items-center text-center">
           <button
-            className={`flex gap-2 items-center px-6 py-2  border border-gray-400  rounded-[3px] cursor-pointer ${status === "pending" ? "bg-black text-white" : "bg-purple-700 text-white"}`}
+            className={`flex gap-2 items-center px-6 py-2  rounded-[3px] cursor-pointer ${status === "pending" ? "bg-black text-white" : "bg-purple-700 text-white"}`}
             onClick={handleConnect}
           >
             <FiUserPlus />
