@@ -4,22 +4,56 @@ import SkelatonCardDesign from "@/components/Design/Card-Design/SkelatonCardDesi
 import useAuthInfo from "@/Hooks/useAuthInfo";
 import useAxios from "@/Hooks/useAxios";
 import PrivateRoutes from "@/Routes/PrivateRoutes";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 function Connections() {
   const axiosSecure = useAxios();
   const { user } = useAuthInfo();
+  const queryClient = useQueryClient();
 
   const { data: allFriendRequest = [], isLoading } = useQuery({
     queryKey: ["inComingRequest", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/friends-request/incoming?email=${user?.email}`,
-      );
+      const res = await axiosSecure.get(`/friends-request/incoming?email=${user?.email}`);
       return res.data;
     },
     enabled: !!user?.email,
   });
+
+  // handle Accepted friend-request functionality 
+  const handleAccepted = async(senderEmail) => {
+    try{
+        await axiosSecure.patch("/friend-request/accepted", {
+            senderEmail,
+            receiverEmail: user.email
+        });
+
+        queryClient.invalidateQueries({
+            queryKey: ["inComingRequest", user?.email]
+        })
+    }
+    catch(err) {
+        console.log(err);
+    }
+  }
+
+
+  // handle Reject friend-request functionality 
+  const handleReject = async(senderEmail) => {
+    try{
+        await axiosSecure.patch("/friend-request/rejected", {
+            senderEmail, 
+            receiverEmail: user.email
+        });
+
+        queryClient.invalidateQueries({
+            queryKey: ["inComingRequest", user?.email]
+        })
+    }
+    catch(err) {
+        console.log(err);
+    }
+  }
 
   return (
     <div className="text-black">
@@ -43,6 +77,8 @@ function Connections() {
                 senderImg={item.senderImg}
                 senderName={item.senderName}
                 senderEmail={item.senderEmail}
+                onAccept = {handleAccepted}
+                onReject = {handleReject}
               />
             ))}
       </section>
