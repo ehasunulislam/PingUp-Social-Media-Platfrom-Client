@@ -6,7 +6,6 @@ import PrivateRoutes from "@/Routes/PrivateRoutes";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
 import Swal from "sweetalert2";
 
 function StoryImagePreview() {
@@ -40,7 +39,7 @@ function StoryImagePreview() {
       formData.append("image", file);
 
       // ImageBB API call
-      const imageBB_URL = `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMAGE_BB_API_LINK}`;
+      const imageBB_URL = `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMAGE_BB__LINK_STROTY}`;
       const res = await axios.post(imageBB_URL, formData);
 
       const imageLink = res.data.data.url;

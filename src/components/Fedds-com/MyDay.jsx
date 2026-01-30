@@ -40,6 +40,7 @@ const MyDay = () => {
     queryKey: ["myDay"],
     queryFn: async () => {
       const res = await axiosSecure.get("/all-stories");
+      console.log("Fetched Stories:", res.data);
       return res.data || [];
     },
   });

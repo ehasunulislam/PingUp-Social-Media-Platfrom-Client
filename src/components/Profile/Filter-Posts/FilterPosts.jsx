@@ -16,7 +16,7 @@ const FilterPosts = () => {
         </Tab>
       </TabList>
 
-      <section className="mt-6">
+      <section className="mt-6 w-full">
         <TabPanel>
           <AllPostTabs />
         </TabPanel>
