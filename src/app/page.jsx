@@ -58,44 +58,31 @@ export default function Register() {
   /* handle Register functionality start */
   const handleRegister = async (data) => {
     try{
-      // upload photo in imageBB
-      const registerImg = data.image[0];
+      // create user in firebase
+      const authResult = await createUser(data.email, data.password);
+      const firebaseUser = authResult.user;
+
+      // prepare the data
       const formData = new FormData();
-      formData.append("image", registerImg);
+      formData.append("uid", firebaseUser.uid)
+      formData.append("name", data.name);
+      formData.append("email", data.email);
+      formData.append("image", data.image[0]);
 
-      const image_BB_API_Key = `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMAGE_BB_API_LINK}`;
-      const imageRes = await axios.post(image_BB_API_Key, formData);
-      const imageData = imageRes.data.data.url;
+      // send to backend
+      const res = await axiosSecure.post("/user-create", formData);
 
-      // create user with firebase auth
-      const registerFunction = await createUser(data.email, data.password);
-      const user = registerFunction.user;
-      console.log(user);
+      // update firebase profile
+      await updateUserProfileFunction(data.name, res.data.imageUrl);
 
-      // update user profile
-      await updateUserProfileFunction(data.name, imageData)
+      Swal.fire({
+        icon: "success",
+        title: "Registered successfully",
+        timer: 2000,
+        showConfirmButton: false,
+      });
 
-      // send user in database
-      const userData = {
-        uid: user.uid,
-        name: data.name,
-        email: data.email, 
-        img: imageData,
-        role: "user",
-        status: "approved"
-      }
-
-      const res = await axiosSecure.post("/user", userData);
-      if(res.data.insertedId){
-        Swal.fire({
-          icon: "success",
-          title: "You registerd successfully",
-          showConfirmButton: false,
-          timer: 2500
-        });
-        reset();
-        router.push(redirect)
-      };
+      router.push(redirect);
     }
     catch(err) {
       Swal.fire({
@@ -109,38 +96,36 @@ export default function Register() {
 
   /* handle GooglePopup functionality start */
   const handleGooglePopUp = async () => {
-    try{
+    try {
       const result = await signInWithGooglePopUpFunction();
       const signInUser = result.user;
 
       const userData = {
         uid: signInUser.uid,
-        name: signInUser.displayName, 
+        name: signInUser.displayName,
         email: signInUser.email,
         img: signInUser.photoURL,
-        role: "user",
-        status: "approved"
       };
 
-      const res = await axiosSecure.post("/user", userData)
-      if(res.data.insertedId){
+      const res = await axiosSecure.post("/user-create-google", userData);
+
+      if (res.data.success) {
         Swal.fire({
           icon: "success",
-          title: "You registerd successfully",
+          title: "Logged in successfully",
+          timer: 2000,
           showConfirmButton: false,
-          timer: 2500
         });
         router.push(redirect);
-      };
-    }
-    catch(err) {
+      }
+    } catch (err) {
       Swal.fire({
         icon: "error",
         title: "Something went wrong!",
         text: err.message,
       });
     }
-  }
+  };
   /* handle GooglePopup functionality end */
 
   

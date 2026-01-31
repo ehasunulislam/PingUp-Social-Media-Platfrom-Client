@@ -12,7 +12,6 @@ const AllFeeds = () => {
   const axiosSecure = useAxios();
   const {user} = useAuthInfo();
 
-  console.log(data)
 
   useEffect(() => {
     const fetchData = async () => {

@@ -74,7 +74,7 @@ export default function Login() {
         status: "approved"
       };
 
-      const res = await axiosSecure.post("/user", userData)
+      const res = await axiosSecure.post("/user-create-google", userData)
       if(res.data.insertedId || res.data.message === "User already exists"){
         Swal.fire({
           icon: "success",
