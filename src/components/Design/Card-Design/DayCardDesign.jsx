@@ -30,6 +30,7 @@ const DayCardDesign = ({ userImg, dayPic, createdAt }) => {
               alt="profile"
               width={50}
               height={50}
+              // unoptimized
               className="object-cover"
             />
           </div>

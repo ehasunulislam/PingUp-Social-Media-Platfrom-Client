@@ -15,7 +15,6 @@ const AuthProvider = ({children}) => {
   }
   /* register functionality end */
 
-
   /* google popup functionality start */
   const googleProvider = new GoogleAuthProvider();
 

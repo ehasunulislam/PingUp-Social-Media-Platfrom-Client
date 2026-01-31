@@ -10,12 +10,10 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "i.ibb.co",
-        pathname: "/**",
       },
       {
         protocol: "https",
         hostname: "i.ibb.co.com",
-        pathname: "/**",
       },
       {
         protocol: "https",

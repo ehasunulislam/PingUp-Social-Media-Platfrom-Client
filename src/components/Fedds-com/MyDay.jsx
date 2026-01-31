@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/refs */
 "use client";
 
 import useAuthInfo from "@/Hooks/useAuthInfo";
@@ -41,7 +40,7 @@ const MyDay = () => {
     queryFn: async () => {
       const res = await axiosSecure.get("/all-stories");
       console.log("Fetched Stories:", res.data);
-      return res.data || [];
+      return res.data;
     },
   });
 
@@ -126,7 +125,7 @@ const MyDay = () => {
         modules={[FreeMode, Navigation]}
         slidesPerView="auto"
         freeMode={true}
-        navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
+        // navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
         onBeforeInit={(swiper) => {
           swiper.params.navigation.prevEl = prevRef.current;
           swiper.params.navigation.nextEl = nextRef.current;

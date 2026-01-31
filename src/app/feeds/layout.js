@@ -10,16 +10,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import LayoutLinks from "@/components/Active-Links/Layout-Links/LayoutLinks";
 import CreatePostBtn from "@/components/Active-Links/Create-Post-Btn/CreatePostBtn";
 import LayoutInUser from "@/components/Active-Links/Layout-Links/LayoutInUser";
+import LogoutBtn from "@/components/Log-Out/LogoutBtn";
+import { assetsData } from "@/assets-images/assets";
 
 export default function FeedLayout({ children }) {
-  const { user, logOutFunctionality } = useAuthInfo();
+  const { user } = useAuthInfo();
   const queryClient = new QueryClient();
-
-  const handleLogOut = () => {
-    logOutFunctionality()
-      .then(() => Swal.fire({ title: "Logged out", icon: "success" }))
-      .catch((err) => Swal.fire({ icon: "error", title: err.message }));
-  };
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -76,26 +72,24 @@ export default function FeedLayout({ children }) {
         <aside className="hidden lg:block col-span-4 pt-6 pr-6">
           <div className="bg-white rounded-xl shadow-sm p-5">
             <h3 className="font-bold text-black">Sponsored</h3>
-            <Image
-              src="/assets/news_feed.png"
-              alt="Sponsored"
-              width={350}
-              height={300}
-              className="rounded-xl mt-3"
-            />
+            <div className="relative w-full h-60 mt-3">
+              <Image
+                src={assetsData.news_feed}
+                alt="Sponsored"
+                fill
+                className="rounded-xl object-cover"
+              />
+            </div>
             <h2 className="mt-3 font-semibold text-black">Email marketing</h2>
             <p className="text-sm text-gray-400">
               Supercharge your marketing with a powerful platform.
             </p>
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm p-5 mt-5">
+          {/* <div className="bg-white rounded-xl shadow-sm p-5 mt-5">
             <h3 className="font-bold text-black">Recent Messages</h3>
-          </div>
-
-          <button className="btn" onClick={handleLogOut}>
-            <p>logout</p>
-          </button>
+          </div> */}
+          <LogoutBtn />
         </aside>
 
         {/* ================= MOBILE + TABLET BOTTOM NAV ================= */}

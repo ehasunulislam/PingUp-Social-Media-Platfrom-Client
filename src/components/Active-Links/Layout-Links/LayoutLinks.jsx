@@ -6,6 +6,7 @@ import { LuUsersRound } from "react-icons/lu";
 import { TfiUser } from "react-icons/tfi";
 import useAuthInfo from "@/Hooks/useAuthInfo";
 import { IoSearchSharp } from "react-icons/io5";
+import { TbSettings } from "react-icons/tb";
 
 const LayoutLinks = () => {
   const { user, loading } = useAuthInfo();
@@ -35,6 +36,11 @@ const LayoutLinks = () => {
           <TfiUser /> <span className="hidden lg:inline">Profile</span>
         </ActiveLinks>
       )}
+
+      <ActiveLinks href="/setting">
+        <TbSettings />
+        <span className="hidden lg:inline">Setting</span>
+      </ActiveLinks>
     </nav>
   );
 };
