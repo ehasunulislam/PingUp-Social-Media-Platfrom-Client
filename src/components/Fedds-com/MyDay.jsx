@@ -19,6 +19,7 @@ import "swiper/css/navigation";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import LoadingSkelatonOfMyDay from "./LoadingSkelatonOfMyDay";
+import { useStory } from "@/Context/StoryContext";
 
 const MyDay = () => {
   const { user } = useAuthInfo();
@@ -33,6 +34,7 @@ const MyDay = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCreateStoryModal, setIsCreateStoryModal] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const {setStoryFile} = useStory();
 
   // Fetch stories using axiosSecure
   const { data: actualStories = [], isLoading } = useQuery({
@@ -105,11 +107,11 @@ const MyDay = () => {
 
   const handleChange = (e) => {
     const file = e.target.files?.[0];
-    if (file) {
-      setSelectedFile(file);
-      const previewURL = URL.createObjectURL(file);
-      router.push(`/storyImagePreveiw?image=${encodeURIComponent(previewURL)}`);
-    }
+    if(!file) return;
+
+    setStoryFile(file);
+    const previewURL = URL.createObjectURL(file);
+    router.push(`/storyImagePreveiw?image=${encodeURIComponent(previewURL)}`);
   };
 
   if(isLoading) {

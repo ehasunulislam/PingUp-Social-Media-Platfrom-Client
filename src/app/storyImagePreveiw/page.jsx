@@ -1,11 +1,13 @@
 "use client";
 
+import { useStory } from "@/Context/StoryContext";
 import useAuthInfo from "@/Hooks/useAuthInfo";
 import useAxios from "@/Hooks/useAxios";
 import PrivateRoutes from "@/Routes/PrivateRoutes";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import Swal from "sweetalert2";
 
 function StoryImagePreview() {
@@ -14,42 +16,25 @@ function StoryImagePreview() {
   const axiosSecure = useAxios();
   const { user } = useAuthInfo();
   const router = useRouter();
+  const {storyFile} = useStory();
 
-  if (!imageURL) {
-    return (
-      <div>
-        <p>No image for preview</p>
-      </div>
-    );
+  const [isposting, SetIsPosting] = useState(false);
+
+  if (!storyFile || !imageURL) {
+    return <p>No image selected</p>;
   }
 
   const handleStoryUpload = async () => {
     if (!imageURL) return;
 
     try {
-      // blob বানানো
-      const response = await fetch(imageURL);
-      const blob = await response.blob();
+      SetIsPosting(true);
 
-      // File object বানানো
-      const file = new File([blob], "story.jpg", { type: blob.type });
-
-      // FormData
       const formData = new FormData();
-      formData.append("image", file);
+      formData.append("email", user.email);
+      formData.append("image", storyFile)
 
-      // ImageBB API call
-      const imageBB_URL = `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMAGE_BB__LINK_STROTY}`;
-      const res = await axios.post(imageBB_URL, formData);
-
-      const imageLink = res.data.data.url;
-      // send to backend
-      const newStoryData = {
-        email: user?.email,
-        dayPic: imageLink,
-      };
-
-      await axiosSecure.post("/stories/upload", newStoryData);
+      await axiosSecure.post("/stories/upload", formData);
 
       Swal.fire({
         icon: "success",
@@ -58,12 +43,16 @@ function StoryImagePreview() {
       });
 
       router.push("/feeds");
-    } catch (error) {
+    } 
+    catch (error) {
       Swal.fire({
         icon: "error",
         title: "Upload Failed",
         text: error.message,
       });
+    }
+    finally {
+      SetIsPosting(false);
     }
   };
 
@@ -85,11 +74,16 @@ function StoryImagePreview() {
       </div>
 
       <div className="flex gap-3 items-center mt-5">
-        <button
-          className="bg-linear-to-r from-[#615FFF] to-[#9810FA] px-6 py-3 rounded-lg cursor-pointer"
+       <button
+          disabled={isposting}
+          className={`px-6 py-3 rounded-lg cursor-pointer transition 
+            ${isposting 
+              ? "bg-gray-400 cursor-not-allowed" 
+              : "bg-linear-to-r from-[#615FFF] to-[#9810FA]"
+            }`}
           onClick={handleStoryUpload}
         >
-          Post now
+          {isposting ? "Posting..." : "Post now"}
         </button>
 
         <button
