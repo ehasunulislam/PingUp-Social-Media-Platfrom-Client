@@ -37,10 +37,10 @@ const LayoutLinks = () => {
         </ActiveLinks>
       )}
 
-      <ActiveLinks href="/setting">
+      {/* <ActiveLinks href="/setting">
         <TbSettings />
         <span className="hidden lg:inline">Setting</span>
-      </ActiveLinks>
+      </ActiveLinks> */}
     </nav>
   );
 };
