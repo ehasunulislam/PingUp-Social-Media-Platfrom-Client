@@ -16,11 +16,12 @@ function CreatePostPage() {
   const fileInputRef = useRef(null);
   const [selectedImages, setSelectedImages] = useState([]);
   const [text, setText] = useState("");
+  const [isPosting, setIsPosting] = useState(false);
 
   // redirect after post-create
   const searchParams = useSearchParams();
   const router = useRouter();
-  const redirect = searchParams.get("redirect") || "/feeds"
+  const redirect = searchParams.get("redirect") || "/feeds";
 
   const handleImageClick = () => {
     fileInputRef.current.click();
@@ -62,6 +63,8 @@ function CreatePostPage() {
     });
 
     try {
+      setIsPosting(true);
+
       const res = await axiosSecure.post("/create-post", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -82,14 +85,15 @@ function CreatePostPage() {
       setSelectedImages([]);
 
       // ridrect
-      router.push(redirect)
-
+      router.push(redirect);
     } catch (err) {
       Swal.fire({
         icon: "error",
         title: "Something went wrong!",
         text: err.message,
       });
+    } finally {
+      setIsPosting(false);
     }
   };
   /* send (create-post) data in backend end */
@@ -103,13 +107,14 @@ function CreatePostPage() {
         <div className="card w-full sm:max-w-md lg:max-w-xl card-sm shadow-sm">
           <form className="card-body" onSubmit={handleSbumit}>
             <section className="flex gap-3 items-center">
-              <Image
-                src={user?.photoURL}
-                alt="User"
-                width={50}
-                height={50}
-                className="rounded-full"
-              />
+              <div className="relative w-10 h-10 rounded-full overflow-hidden">
+                <Image
+                  src={user.photoURL}
+                  alt="User"
+                  fill
+                  className="object-cover rounded-full"
+                />
+              </div>
               <h2 className="card-title">{user?.displayName}</h2>
             </section>
 
@@ -150,7 +155,7 @@ function CreatePostPage() {
                 />
 
                 <button
-                type="button"
+                  type="button"
                   className="text-gray-300 cursor-pointer image-icon"
                   onClick={handleImageClick}
                 >
@@ -158,8 +163,16 @@ function CreatePostPage() {
                 </button>
               </div>
 
-              <button className="btn bg-linear-to-r from-[#615FFF] to-[#9810FA] text-white border-0">
-                Publish Post
+              <button
+                disabled={isPosting}
+                className={`px-6 py-3 rounded-lg cursor-pointer transition text-white font-semibold
+                ${
+                  isPosting
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-linear-to-r from-[#615FFF] to-[#9810FA]"
+                }`}
+              >
+                {isPosting ? "Publishing....." : "Publish now"}
               </button>
             </div>
           </form>
@@ -176,6 +189,3 @@ export default function PageWrapper() {
     </PrivateRoutes>
   );
 }
-
-
-
