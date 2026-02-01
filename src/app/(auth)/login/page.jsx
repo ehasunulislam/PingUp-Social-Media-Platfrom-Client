@@ -14,7 +14,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import useAxios from "@/Hooks/useAxios";
 import { HiOutlineMail } from "react-icons/hi";
 import { HiOutlineLockClosed } from "react-icons/hi2";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const authFont = Urbanist({
   subsets: ["latin"],
@@ -23,6 +23,7 @@ const authFont = Urbanist({
 export default function Login() {
   const {register, handleSubmit, watch, reset,formState: {errors}} = useForm();
   const {user, loading, loginUserFunctionality, signInWithGooglePopUpFunction, forgetPassword} = useAuthInfo();
+  const [isLogining, setIsLogining] = useState(false);
   const axiosSecure = useAxios();
   
   // redirect functionality 
@@ -40,6 +41,8 @@ export default function Login() {
   /* handle login functionality start */
   const handleLogin = async(data) => {
     try{
+      setIsLogining(true);
+
       await loginUserFunctionality(data.email, data.password)
       Swal.fire({
         title: "Login Successful 🎉",
@@ -55,6 +58,9 @@ export default function Login() {
         title: "Something went wrong!",
         text: err.message,
       });
+    }
+    finally {
+      setIsLogining(false);
     }
   }
   /* handle login functionality end */
@@ -216,12 +222,13 @@ export default function Login() {
 
               {/* Button */}
               <button
+                disabled={isLogining}
                 type="submit"
-                className="w-full mt-2 py-2 rounded-md text-white font-medium
-                       bg-linear-to-b from-zinc-700 to-zinc-900
-                       hover:from-zinc-800 hover:to-black transition cursor-pointer"
+                className={`w-full mt-2 py-2 rounded-md text-white font-medium
+                       ${isLogining ? "bg-gray-400 cursor-not-allowed" : "bg-linear-to-b from-zinc-700 to-zinc-900 hover:from-zinc-800 hover:to-black transition cursor-pointer"}
+                      `}
               >
-                Continue →
+                {isLogining ? "Logining...." : "Continue →"}
               </button>
 
               <div>
