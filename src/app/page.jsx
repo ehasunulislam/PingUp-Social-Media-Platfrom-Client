@@ -24,8 +24,9 @@ const authFont = Urbanist({
 });
 
 export default function Register() {
-  const {register, handleSubmit, watch, reset,formState: {errors}} = useForm();
+  const {register, handleSubmit, watch, reset, formState: {errors}} = useForm();
   const [preview, setPreview] = useState(null);
+  const [isRegistering, setIsRegistering] = useState(false);
   const {user, loading, createUser, updateUserProfileFunction, signInWithGooglePopUpFunction} = useAuthInfo();
   const axiosSecure = useAxios();
 
@@ -58,6 +59,8 @@ export default function Register() {
   /* handle Register functionality start */
   const handleRegister = async (data) => {
     try{
+      setIsRegistering(true);
+
       // create user in firebase
       const authResult = await createUser(data.email, data.password);
       const firebaseUser = authResult.user;
@@ -90,6 +93,9 @@ export default function Register() {
         title: "Something went wrong!",
         text: err.message,
       });
+    }
+    finally {
+      setIsRegistering(false);
     }
   };
   /* handle Register functionality end */ 
@@ -254,12 +260,13 @@ export default function Register() {
               </div>
 
               <button
+                disabled={isRegistering}
                 type="submit"
-                className="w-full mt-2 py-2 rounded-md text-white font-medium
-                       bg-linear-to-b from-zinc-700 to-zinc-900
-                       hover:from-zinc-800 hover:to-black transition cursor-pointer"
+                className={`w-full mt-2 py-2 rounded-md text-white font-medium
+                       ${isRegistering ? "bg-gray-400 cursor-not-allowed" : "bg-linear-to-b from-zinc-700 to-zinc-900 hover:from-zinc-800 hover:to-black transition cursor-pointer"}
+                      `}
               >
-                Continue →
+                {isRegistering ? "Registering...." : "Continue →"}
               </button>
             </form>
 
