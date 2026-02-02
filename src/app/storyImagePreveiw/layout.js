@@ -8,6 +8,7 @@ import { HiMiniArrowRightStartOnRectangle } from "react-icons/hi2";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import MobileLink from "@/components/Active-Links/Links-for-mobile/MobileLink";
 import LayoutInUser from "@/components/Active-Links/Layout-Links/LayoutInUser";
+import LogoutBtn from "@/components/Log-Out/LogoutBtn";
 
 export default function StoryImageUploadLayout({ children }) {
   const { user } = useAuthInfo();
@@ -24,18 +25,32 @@ export default function StoryImageUploadLayout({ children }) {
           </Link>
 
           {/* Right actions */}
-          {user && (
-            <Link href="/profile">
-              <div className="relative w-9 h-9 rounded-full overflow-hidden">
-                <Image
-                  src={user.photoURL}
-                  alt="User"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            </Link>
-          )}
+          <div className="dropdown">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle"
+            >
+              {user && (
+                <div className="relative w-9 h-9 rounded-full overflow-hidden">
+                  <Image
+                    src={user.photoURL}
+                    alt="User"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              )}
+            </div>
+            <ul
+              tabIndex="-1"
+              className="menu menu-sm dropdown-content rounded-box z-1 mt-3 p-2 -ms-19 border-0"
+            >
+              <li>
+                <LogoutBtn />
+              </li>
+            </ul>
+          </div>
         </header>
 
         {/* ================= LEFT SIDEBAR (DESKTOP ONLY) ================= */}

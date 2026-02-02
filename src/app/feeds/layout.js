@@ -28,16 +28,26 @@ export default function FeedLayout({ children }) {
           </Link>
 
           {/* Right actions */}
-          {user && (
-            <div className="relative w-9 h-9 rounded-full overflow-hidden">
-              <Image
-                src={user.photoURL}
-                alt="User"
-                fill
-                className="object-cover"
-              />
+          <div className="dropdown">
+            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
+              {user && (
+                <div className="relative w-9 h-9 rounded-full overflow-hidden">
+                  <Image
+                    src={user.photoURL}
+                    alt="User"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              )}
             </div>
-          )}
+            <ul
+              tabIndex="-1" className="menu menu-sm dropdown-content rounded-box z-1 mt-3 p-2 -ms-19 border-0">
+              <li>
+                <LogoutBtn />
+              </li>
+            </ul>
+          </div>
         </header>
 
         {/* ================= LEFT SIDEBAR (DESKTOP ONLY) ================= */}
