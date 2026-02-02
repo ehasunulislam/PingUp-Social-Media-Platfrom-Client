@@ -23,7 +23,7 @@ const authFont = Urbanist({
   subsets: ["latin"],
 });
 
-export default function Register() {
+export default function RegisterClient() {
   const {register, handleSubmit, watch, reset, formState: {errors}} = useForm();
   const [preview, setPreview] = useState(null);
   const [isRegistering, setIsRegistering] = useState(false);
