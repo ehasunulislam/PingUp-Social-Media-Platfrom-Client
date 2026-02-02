@@ -3,6 +3,7 @@ import CommentsByUserAll from "@/components/Fedds-com/CommentsByUserAll";
 import LoveReact from "@/components/Fedds-com/LoveReact";
 import Image from "next/image";
 import React from "react";
+import { TbDots } from "react-icons/tb";
 
 const FeedsCardDesign = ({
   userImg,
@@ -19,22 +20,24 @@ const FeedsCardDesign = ({
     <div className="card w-full bg-gray-50 shadow-sm text-black">
       <div className="card-body">
         <section>
-          <div className="flex gap-3">
-            <Image
-              src={userImg}
-              alt="user-photo"
-              width={100}
-              height={100}
-              className="w-10 h-10 rounded-full object-cover"
-            />
+          <div className="flex justify-between">
+            <div className="flex gap-3">
+              <Image
+                src={userImg}
+                alt="user-photo"
+                width={100}
+                height={100}
+                className="w-10 h-10 rounded-full object-cover"
+              />
 
-            <div>
-              <h2 className="card-title text-[1rem]">{userName}</h2>
-              <p>{new Date(createdAt).toLocaleDateString()}</p>
+              <div>
+                <h2 className="card-title text-[1rem]">{userName}</h2>
+                <p>{new Date(createdAt).toLocaleDateString()}</p>
+              </div>
             </div>
           </div>
 
-          <div>
+          <div className="pt-3">
             <p className="py-1 mt-1 text-[0.9rem]">{text}</p>
           </div>
         </section>
@@ -53,7 +56,7 @@ const FeedsCardDesign = ({
               src={imageUrl}
               alt={`feed-image-${index}`}
               height={512}
-              width={img.length === 1 ? 600 : 300} 
+              width={img.length === 1 ? 600 : 300}
               className="feed-image rounded-[10px] object-cover w-full"
             />
           ))}

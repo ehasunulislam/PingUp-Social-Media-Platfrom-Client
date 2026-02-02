@@ -19,7 +19,7 @@ const LayoutInUser = () => {
     <div className="flex justify-center items-center">
       {user && (
         <Link href={`/profile/${user.uid}`}>
-          <section className="border-t py-4 px-4 border border-t-gray-200 border-l-0 border-r-0 border-b-0">
+          <section className="border-t py-3 border border-t-gray-200 border-l-0 border-r-0 border-b-0">
             <div className="flex items-center justify-between">
               <div className="flex flex-col text-center gap-3 items-center">
                 <div className="relative w-10 h-10 rounded-full overflow-hidden">

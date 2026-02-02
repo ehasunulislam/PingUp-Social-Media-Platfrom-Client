@@ -14,8 +14,8 @@ const LogoutBtn = () => {
   };
 
   return (
-    <div className="mt-3">
-      <button className="btn w-48" onClick={handleLogOut}>
+    <div className="mt-3 ps-6 me-3">
+      <button className="btn w-full rounded-xl" onClick={handleLogOut}>
         <p>logout</p>
       </button>
     </div>

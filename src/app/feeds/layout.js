@@ -56,6 +56,9 @@ export default function FeedLayout({ children }) {
 
               {/* Create Post */}
               <CreatePostBtn />
+
+              {/* logout-btn */}
+              <LogoutBtn />
             </div>
 
             {/* User Info */}
@@ -89,7 +92,7 @@ export default function FeedLayout({ children }) {
           {/* <div className="bg-white rounded-xl shadow-sm p-5 mt-5">
             <h3 className="font-bold text-black">Recent Messages</h3>
           </div> */}
-          <LogoutBtn />
+          {/* <LogoutBtn /> */}
         </aside>
 
         {/* ================= MOBILE + TABLET BOTTOM NAV ================= */}
