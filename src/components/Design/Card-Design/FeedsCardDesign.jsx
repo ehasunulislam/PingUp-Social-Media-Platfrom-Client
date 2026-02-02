@@ -52,7 +52,7 @@ const FeedsCardDesign = ({
               key={index}
               src={imageUrl}
               alt={`feed-image-${index}`}
-              height={300}
+              height={512}
               width={img.length === 1 ? 600 : 300} 
               className="feed-image rounded-[10px] object-cover w-full"
             />
