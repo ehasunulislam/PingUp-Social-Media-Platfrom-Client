@@ -20,7 +20,7 @@ const authFont = Urbanist({
   subsets: ["latin"],
 });
 
-export default function Login() {
+export default function LoginClient() {
   const {register, handleSubmit, watch, reset,formState: {errors}} = useForm();
   const {user, loading, loginUserFunctionality, signInWithGooglePopUpFunction, forgetPassword} = useAuthInfo();
   const [isLogining, setIsLogining] = useState(false);
