@@ -249,7 +249,7 @@ export default function LoginClient() {
             {/* Footer */}
             <p className="text-sm text-center text-zinc-600">
               Do not have an account?
-              <Link href="/" className="font-semibold text-zinc-900 cursor-pointer ps-1">
+              <Link href="/register" className="font-semibold text-zinc-900 cursor-pointer ps-1">
                 Sign up
               </Link>
             </p>
