@@ -5,6 +5,7 @@ PingUp is a modern social media web application frontend built with **Next.js** 
 ## 🚀 Live Demo
 - **Live Website:** https://ping-up-social-media-platfrom-clien.vercel.app/  
 - **Demo Video:** https://drive.google.com/file/d/1TAv6YJ1H-3tpBhaiIC4hA9LP8GdzSE_l/view?usp=sharing
+- **Server Side Repo:** https://github.com/ehasunulislam/PingUp-Social-Media-Server.git
 
 ---
 
